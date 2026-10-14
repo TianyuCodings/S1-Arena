@@ -1,0 +1,1471 @@
+{
+ "benchmark": "S1-Arena",
+ "updated": "2026-10-14",
+ "non_agentic": {
+  "requests": 43226,
+  "domains": [
+   {
+    "id": "basic_cls",
+    "short": "Cls",
+    "name": "Basic text classification",
+    "group": "text"
+   },
+   {
+    "id": "know",
+    "short": "Know",
+    "name": "Knowledge and reasoning",
+    "group": "text"
+   },
+   {
+    "id": "social",
+    "short": "Social",
+    "name": "Subjective and social judgments",
+    "group": "text"
+   },
+   {
+    "id": "pro",
+    "short": "Pro",
+    "name": "Professional domains",
+    "group": "applied"
+   },
+   {
+    "id": "ret",
+    "short": "Ret",
+    "name": "Retrieval, ranking and matching",
+    "group": "applied"
+   },
+   {
+    "id": "struct",
+    "short": "Struct",
+    "name": "Structured data, tables and logs",
+    "group": "applied"
+   },
+   {
+    "id": "code",
+    "short": "Code",
+    "name": "Code",
+    "group": "applied"
+   },
+   {
+    "id": "fore",
+    "short": "Fore",
+    "name": "Forecasting",
+    "group": "applied"
+   },
+   {
+    "id": "dialog",
+    "short": "Dialog",
+    "name": "Dialogue and interaction",
+    "group": "applied"
+   },
+   {
+    "id": "batch",
+    "short": "Batch",
+    "name": "Batch semantic processing",
+    "group": "applied"
+   },
+   {
+    "id": "judge",
+    "short": "Judge",
+    "name": "LLM-as-judge and evaluators",
+    "group": "control"
+   },
+   {
+    "id": "safety",
+    "short": "Safety",
+    "name": "Safety and moderation",
+    "group": "control"
+   },
+   {
+    "id": "route",
+    "short": "Route",
+    "name": "Routing and orchestration",
+    "group": "control"
+   }
+  ],
+  "groups": {
+   "text": "Text and knowledge",
+   "applied": "Applied decisions",
+   "control": "Evaluation and control"
+  },
+  "accuracy": "mean over the tasks of the 13 domains; a question without an answer is wrong",
+  "brier": "squared distance between the predicted distribution and the gold (one-hot or annotator) distribution",
+  "latency": "median time of a single request",
+  "cost": "per 1,000 requests: USD for hosted models, H100-equivalent GPU-seconds for local models"
+ },
+ "agentic": {
+  "environments": 127,
+  "step_accuracy": "accuracy on static agent single steps",
+  "loop_success": "mean success rate over the closed-loop environments that every listed model played and that define success"
+ },
+ "models": [
+  {
+   "name": "Claude Opus 5.5",
+   "family": "Closed LLM",
+   "probabilities": "verbalized probabilities",
+   "reasons": true,
+   "ids": {
+    "static": "copilot/claude-opus-5.5@effort-low",
+    "agentic": null
+   },
+   "link": null,
+   "accuracy": 0.8114,
+   "brier": 0.2324,
+   "groups": {
+    "text": 0.8519,
+    "applied": 0.8007,
+    "control": 0.7834
+   },
+   "domains": {
+    "basic_cls": 0.7973,
+    "know": 0.916,
+    "social": 0.7961,
+    "pro": 0.7951,
+    "ret": 0.7884,
+    "struct": 0.9524,
+    "code": 0.8202,
+    "fore": 0.6158,
+    "dialog": 0.7654,
+    "batch": 0.7767,
+    "judge": 0.7785,
+    "safety": 0.8624,
+    "route": 0.7228
+   },
+   "latency_ms": 2293.2,
+   "latency_where": "network (GitHub Copilot)",
+   "cost_per_1k_requests": {
+    "value": 10.3805,
+    "unit": "USD",
+    "usd": 10.3805
+   },
+   "output_tokens": 131.9,
+   "agentic": null,
+   "rank": 1
+  },
+  {
+   "name": "GPT-6 Astra",
+   "family": "Closed LLM",
+   "probabilities": "verbalized probabilities",
+   "reasons": true,
+   "ids": {
+    "static": "copilot/gpt-6-astra@effort-low",
+    "agentic": null
+   },
+   "link": null,
+   "accuracy": 0.8007,
+   "brier": 0.2821,
+   "groups": {
+    "text": 0.8442,
+    "applied": 0.784,
+    "control": 0.779
+   },
+   "domains": {
+    "basic_cls": 0.7984,
+    "know": 0.909,
+    "social": 0.7642,
+    "pro": 0.7793,
+    "ret": 0.7932,
+    "struct": 0.9207,
+    "code": 0.7904,
+    "fore": 0.5762,
+    "dialog": 0.7742,
+    "batch": 0.762,
+    "judge": 0.7697,
+    "safety": 0.9093,
+    "route": 0.6804
+   },
+   "latency_ms": 2189.1,
+   "latency_where": "network (GitHub Copilot)",
+   "cost_per_1k_requests": {
+    "value": 15.0504,
+    "unit": "USD",
+    "usd": 15.0504
+   },
+   "output_tokens": 55.1,
+   "agentic": null,
+   "rank": 2
+  },
+  {
+   "name": "Grok 4.7",
+   "family": "Closed LLM",
+   "probabilities": "verbalized probabilities",
+   "reasons": true,
+   "ids": {
+    "static": "copilot/grok-4.7@effort-low",
+    "agentic": null
+   },
+   "link": null,
+   "accuracy": 0.775,
+   "brier": 0.306,
+   "groups": {
+    "text": 0.8129,
+    "applied": 0.7493,
+    "control": 0.7747
+   },
+   "domains": {
+    "basic_cls": 0.764,
+    "know": 0.881,
+    "social": 0.7307,
+    "pro": 0.7336,
+    "ret": 0.7767,
+    "struct": 0.8876,
+    "code": 0.7601,
+    "fore": 0.521,
+    "dialog": 0.7436,
+    "batch": 0.7293,
+    "judge": 0.7498,
+    "safety": 0.896,
+    "route": 0.7063
+   },
+   "latency_ms": 6693.9,
+   "latency_where": "network (GitHub Copilot)",
+   "cost_per_1k_requests": {
+    "value": 7.5693,
+    "unit": "USD",
+    "usd": 7.5693
+   },
+   "output_tokens": 765.4,
+   "agentic": null,
+   "rank": 3
+  },
+  {
+   "name": "GPT-6 Sol",
+   "family": "Closed LLM",
+   "probabilities": "verbalized probabilities",
+   "reasons": false,
+   "ids": {
+    "static": "copilot/gpt-6-sol@effort-none",
+    "agentic": null
+   },
+   "link": null,
+   "accuracy": 0.7739,
+   "brier": 0.3402,
+   "groups": {
+    "text": 0.8054,
+    "applied": 0.752,
+    "control": 0.7747
+   },
+   "domains": {
+    "basic_cls": 0.7804,
+    "know": 0.8463,
+    "social": 0.7452,
+    "pro": 0.748,
+    "ret": 0.776,
+    "struct": 0.8785,
+    "code": 0.7424,
+    "fore": 0.5331,
+    "dialog": 0.7568,
+    "batch": 0.7493,
+    "judge": 0.7484,
+    "safety": 0.9072,
+    "route": 0.6987
+   },
+   "latency_ms": 1445.8,
+   "latency_where": "network (GitHub Copilot)",
+   "cost_per_1k_requests": {
+    "value": 2.8327,
+    "unit": "USD",
+    "usd": 2.8327
+   },
+   "output_tokens": 37.4,
+   "agentic": null,
+   "rank": 4
+  },
+  {
+   "name": "GPT-5.6 Sol",
+   "family": "Closed LLM",
+   "probabilities": "verbalized probabilities",
+   "reasons": false,
+   "ids": {
+    "static": "copilot/gpt-5.6-sol@effort-none",
+    "agentic": null
+   },
+   "link": null,
+   "accuracy": 0.7667,
+   "brier": 0.3494,
+   "groups": {
+    "text": 0.7933,
+    "applied": 0.7456,
+    "control": 0.7714
+   },
+   "domains": {
+    "basic_cls": 0.7713,
+    "know": 0.8319,
+    "social": 0.7321,
+    "pro": 0.7496,
+    "ret": 0.7791,
+    "struct": 0.8632,
+    "code": 0.7288,
+    "fore": 0.5118,
+    "dialog": 0.7525,
+    "batch": 0.7487,
+    "judge": 0.7403,
+    "safety": 0.9091,
+    "route": 0.6979
+   },
+   "latency_ms": 1680.1,
+   "latency_where": "network (GitHub Copilot)",
+   "cost_per_1k_requests": {
+    "value": 5.8167,
+    "unit": "USD",
+    "usd": 5.8167
+   },
+   "output_tokens": 44.9,
+   "agentic": null,
+   "rank": 5
+  },
+  {
+   "name": "Gemma-4-31B",
+   "family": "Open LLM",
+   "probabilities": "label probabilities at the answer token",
+   "reasons": false,
+   "ids": {
+    "static": "google/gemma-4-31B-it@label-think0",
+    "agentic": "google/gemma-4-31B-it@label-think0"
+   },
+   "link": "https://huggingface.co/google/gemma-4-31B-it",
+   "accuracy": 0.7391,
+   "brier": 0.4743,
+   "groups": {
+    "text": 0.7579,
+    "applied": 0.716,
+    "control": 0.7562
+   },
+   "domains": {
+    "basic_cls": 0.7372,
+    "know": 0.8082,
+    "social": 0.6584,
+    "pro": 0.7206,
+    "ret": 0.7799,
+    "struct": 0.8262,
+    "code": 0.6943,
+    "fore": 0.4274,
+    "dialog": 0.7236,
+    "batch": 0.7453,
+    "judge": 0.7169,
+    "safety": 0.887,
+    "route": 0.7004
+   },
+   "latency_ms": 60.5,
+   "latency_where": "local GPU (H100)",
+   "cost_per_1k_requests": {
+    "value": 142.3,
+    "unit": "GPU-seconds (H100-equivalent)",
+    "usd": null
+   },
+   "output_tokens": 0.0,
+   "agentic": {
+    "step_accuracy": 0.7129,
+    "loop_success": 0.3286,
+    "steps_unanswered": 0.0033,
+    "decisions_unanswered": 0.0
+   },
+   "rank": 6
+  },
+  {
+   "name": "Decision-2.0-Vega-27B",
+   "family": "System-1 model",
+   "probabilities": "native probabilities",
+   "reasons": false,
+   "ids": {
+    "static": "vllm-sr/Decision-2.0-Vega-27B@7aec49a",
+    "agentic": "vllm-sr/Decision-2.0-Vega-27B"
+   },
+   "link": "https://huggingface.co/vllm-sr/Decision-2.0-Vega-27B",
+   "accuracy": 0.7303,
+   "brier": 0.3427,
+   "groups": {
+    "text": 0.7627,
+    "applied": 0.7134,
+    "control": 0.7215
+   },
+   "domains": {
+    "basic_cls": 0.751,
+    "know": 0.8001,
+    "social": 0.6796,
+    "pro": 0.7003,
+    "ret": 0.7671,
+    "struct": 0.8299,
+    "code": 0.6892,
+    "fore": 0.4385,
+    "dialog": 0.7354,
+    "batch": 0.7713,
+    "judge": 0.6836,
+    "safety": 0.851,
+    "route": 0.6646
+   },
+   "latency_ms": 228.0,
+   "latency_where": "local GPU (H100)",
+   "cost_per_1k_requests": {
+    "value": 316.2,
+    "unit": "GPU-seconds (H100-equivalent)",
+    "usd": null
+   },
+   "output_tokens": 0.0,
+   "agentic": {
+    "step_accuracy": 0.6775,
+    "loop_success": 0.2654,
+    "steps_unanswered": 0.1367,
+    "decisions_unanswered": 0.0
+   },
+   "rank": 7
+  },
+  {
+   "name": "Jev 1.13",
+   "family": "System-1 model",
+   "probabilities": "native probabilities",
+   "reasons": false,
+   "ids": {
+    "static": "typesafe-ai/jev",
+    "agentic": "typesafe-ai/jev"
+   },
+   "link": null,
+   "accuracy": 0.7257,
+   "brier": 0.3489,
+   "groups": {
+    "text": 0.7662,
+    "applied": 0.7014,
+    "control": 0.72
+   },
+   "domains": {
+    "basic_cls": 0.7299,
+    "know": 0.8194,
+    "social": 0.6975,
+    "pro": 0.7061,
+    "ret": 0.7699,
+    "struct": 0.7865,
+    "code": 0.6594,
+    "fore": 0.4405,
+    "dialog": 0.7319,
+    "batch": 0.7533,
+    "judge": 0.6843,
+    "safety": 0.8671,
+    "route": 0.6449
+   },
+   "latency_ms": 321.4,
+   "latency_where": "network (Vercel AI Gateway)",
+   "cost_per_1k_requests": {
+    "value": 0.0519,
+    "unit": "USD",
+    "usd": 0.0519
+   },
+   "output_tokens": 0.0,
+   "agentic": {
+    "step_accuracy": 0.6781,
+    "loop_success": 0.1735,
+    "steps_unanswered": 0.1316,
+    "decisions_unanswered": 0.0041
+   },
+   "rank": 8
+  },
+  {
+   "name": "gpt-oss-120b",
+   "family": "Open LLM",
+   "probabilities": "label probabilities at the answer token",
+   "reasons": true,
+   "ids": {
+    "static": "openai/gpt-oss-120b@label-low-think4096",
+    "agentic": null
+   },
+   "link": "https://huggingface.co/openai/gpt-oss-120b",
+   "accuracy": 0.7178,
+   "brier": 0.534,
+   "groups": {
+    "text": 0.7391,
+    "applied": 0.7025,
+    "control": 0.719
+   },
+   "domains": {
+    "basic_cls": 0.6951,
+    "know": 0.829,
+    "social": 0.5793,
+    "pro": 0.6792,
+    "ret": 0.7452,
+    "struct": 0.8285,
+    "code": 0.7161,
+    "fore": 0.4092,
+    "dialog": 0.7232,
+    "batch": 0.7133,
+    "judge": 0.7067,
+    "safety": 0.8282,
+    "route": 0.6431
+   },
+   "latency_ms": 283.6,
+   "latency_where": "local GPU (H100)",
+   "cost_per_1k_requests": {
+    "value": 101.4,
+    "unit": "GPU-seconds (H100-equivalent)",
+    "usd": null
+   },
+   "output_tokens": 94.5,
+   "agentic": null,
+   "rank": 9
+  },
+  {
+   "name": "GPT-6 Luna",
+   "family": "Closed LLM",
+   "probabilities": "verbalized probabilities",
+   "reasons": false,
+   "ids": {
+    "static": "copilot/gpt-6-luna@effort-none",
+    "agentic": "bedrock/us.openai.gpt-6-luna@effort=none"
+   },
+   "link": null,
+   "accuracy": 0.7116,
+   "brier": 0.4607,
+   "groups": {
+    "text": 0.7323,
+    "applied": 0.7005,
+    "control": 0.7066
+   },
+   "domains": {
+    "basic_cls": 0.7241,
+    "know": 0.7531,
+    "social": 0.6903,
+    "pro": 0.7133,
+    "ret": 0.7523,
+    "struct": 0.7726,
+    "code": 0.6637,
+    "fore": 0.4918,
+    "dialog": 0.7193,
+    "batch": 0.7313,
+    "judge": 0.6706,
+    "safety": 0.865,
+    "route": 0.6224
+   },
+   "latency_ms": 1276.3,
+   "latency_where": "network (GitHub Copilot)",
+   "cost_per_1k_requests": {
+    "value": 0.1428,
+    "unit": "USD",
+    "usd": 0.1428
+   },
+   "output_tokens": 39.8,
+   "agentic": {
+    "step_accuracy": 0.6915,
+    "loop_success": 0.2293,
+    "steps_unanswered": 0.0006,
+    "decisions_unanswered": 0.0019
+   },
+   "rank": 10
+  },
+  {
+   "name": "Microsoft-Decision-1",
+   "family": "System-1 model",
+   "probabilities": "native probabilities",
+   "reasons": false,
+   "ids": {
+    "static": "openrouter-decisions/microsoft/microsoft-decision-1",
+    "agentic": "openrouter-decisions/microsoft/microsoft-decision-1"
+   },
+   "link": null,
+   "accuracy": 0.7089,
+   "brier": 0.3694,
+   "groups": {
+    "text": 0.7451,
+    "applied": 0.6845,
+    "control": 0.7085
+   },
+   "domains": {
+    "basic_cls": 0.7287,
+    "know": 0.8052,
+    "social": 0.6054,
+    "pro": 0.6764,
+    "ret": 0.7591,
+    "struct": 0.7891,
+    "code": 0.6448,
+    "fore": 0.4071,
+    "dialog": 0.719,
+    "batch": 0.7353,
+    "judge": 0.685,
+    "safety": 0.8294,
+    "route": 0.6383
+   },
+   "latency_ms": 304.2,
+   "latency_where": "network (OpenRouter)",
+   "cost_per_1k_requests": {
+    "value": 0.0383,
+    "unit": "USD",
+    "usd": 0.0383
+   },
+   "output_tokens": 0.0,
+   "agentic": {
+    "step_accuracy": 0.6516,
+    "loop_success": 0.1241,
+    "steps_unanswered": 0.137,
+    "decisions_unanswered": 0.0
+   },
+   "rank": 11
+  },
+  {
+   "name": "Qwen3.8-27B",
+   "family": "Open LLM",
+   "probabilities": "label probabilities at the answer token",
+   "reasons": false,
+   "ids": {
+    "static": "Qwen/Qwen3.8-27B@label-think0",
+    "agentic": "Qwen/Qwen3.8-27B@label-think0"
+   },
+   "link": "https://huggingface.co/Qwen/Qwen3.8-27B",
+   "accuracy": 0.7016,
+   "brier": 0.3909,
+   "groups": {
+    "text": 0.7184,
+    "applied": 0.6774,
+    "control": 0.7224
+   },
+   "domains": {
+    "basic_cls": 0.7189,
+    "know": 0.7551,
+    "social": 0.6074,
+    "pro": 0.6981,
+    "ret": 0.7403,
+    "struct": 0.7253,
+    "code": 0.651,
+    "fore": 0.4009,
+    "dialog": 0.6966,
+    "batch": 0.746,
+    "judge": 0.6788,
+    "safety": 0.863,
+    "route": 0.6641
+   },
+   "latency_ms": 104.6,
+   "latency_where": "local GPU (H100)",
+   "cost_per_1k_requests": {
+    "value": 142.2,
+    "unit": "GPU-seconds (H100-equivalent)",
+    "usd": null
+   },
+   "output_tokens": 0.0,
+   "agentic": {
+    "step_accuracy": 0.6895,
+    "loop_success": 0.262,
+    "steps_unanswered": 0.0,
+    "decisions_unanswered": 0.0
+   },
+   "rank": 12
+  },
+  {
+   "name": "GPT-5.6 Luna",
+   "family": "Closed LLM",
+   "probabilities": "verbalized probabilities",
+   "reasons": false,
+   "ids": {
+    "static": "copilot/gpt-5.6-luna@effort-none",
+    "agentic": "bedrock/us.openai.gpt-5.6-luna@effort=none"
+   },
+   "link": null,
+   "accuracy": 0.6998,
+   "brier": 0.4579,
+   "groups": {
+    "text": 0.7057,
+    "applied": 0.6917,
+    "control": 0.7068
+   },
+   "domains": {
+    "basic_cls": 0.7125,
+    "know": 0.7253,
+    "social": 0.63,
+    "pro": 0.705,
+    "ret": 0.7475,
+    "struct": 0.7605,
+    "code": 0.6466,
+    "fore": 0.4599,
+    "dialog": 0.7259,
+    "batch": 0.7387,
+    "judge": 0.6759,
+    "safety": 0.8561,
+    "route": 0.6229
+   },
+   "latency_ms": 1374.8,
+   "latency_where": "network (GitHub Copilot)",
+   "cost_per_1k_requests": {
+    "value": 0.3006,
+    "unit": "USD",
+    "usd": 0.3006
+   },
+   "output_tokens": 45.6,
+   "agentic": {
+    "step_accuracy": 0.6743,
+    "loop_success": 0.1888,
+    "steps_unanswered": 0.0071,
+    "decisions_unanswered": 0.0006
+   },
+   "rank": 13
+  },
+  {
+   "name": "Gemma-4-26B-A4B",
+   "family": "Open LLM",
+   "probabilities": "label probabilities at the answer token",
+   "reasons": false,
+   "ids": {
+    "static": "google/gemma-4-26B-A4B-it@label-think0",
+    "agentic": "google/gemma-4-26B-A4B-it@label-think0"
+   },
+   "link": "https://huggingface.co/google/gemma-4-26B-A4B-it",
+   "accuracy": 0.6989,
+   "brier": 0.5285,
+   "groups": {
+    "text": 0.7068,
+    "applied": 0.685,
+    "control": 0.7129
+   },
+   "domains": {
+    "basic_cls": 0.7183,
+    "know": 0.7624,
+    "social": 0.5115,
+    "pro": 0.6826,
+    "ret": 0.7555,
+    "struct": 0.7789,
+    "code": 0.6445,
+    "fore": 0.4092,
+    "dialog": 0.7138,
+    "batch": 0.7533,
+    "judge": 0.6724,
+    "safety": 0.8367,
+    "route": 0.6646
+   },
+   "latency_ms": 46.6,
+   "latency_where": "local GPU (H100)",
+   "cost_per_1k_requests": {
+    "value": 25.3,
+    "unit": "GPU-seconds (H100-equivalent)",
+    "usd": null
+   },
+   "output_tokens": 0.0,
+   "agentic": {
+    "step_accuracy": 0.6806,
+    "loop_success": 0.2173,
+    "steps_unanswered": 0.0,
+    "decisions_unanswered": 0.0
+   },
+   "rank": 14
+  },
+  {
+   "name": "DiffusionGemma-26B-A4B",
+   "family": "Open LLM",
+   "probabilities": "label probabilities at the answer token",
+   "reasons": false,
+   "ids": {
+    "static": "google/diffusiongemma-26B-A4B-it@steps1-reads1-think0-prompt-1",
+    "agentic": "google/diffusiongemma-26B-A4B-it@steps1-reads1-think0-prompt-1"
+   },
+   "link": "https://huggingface.co/google/diffusiongemma-26B-A4B-it",
+   "accuracy": 0.6965,
+   "brier": 0.465,
+   "groups": {
+    "text": 0.7234,
+    "applied": 0.6767,
+    "control": 0.6989
+   },
+   "domains": {
+    "basic_cls": 0.712,
+    "know": 0.7466,
+    "social": 0.6823,
+    "pro": 0.6798,
+    "ret": 0.7615,
+    "struct": 0.7552,
+    "code": 0.6301,
+    "fore": 0.4211,
+    "dialog": 0.6991,
+    "batch": 0.738,
+    "judge": 0.6597,
+    "safety": 0.8355,
+    "route": 0.638
+   },
+   "latency_ms": 67.6,
+   "latency_where": "local GPU (H100)",
+   "cost_per_1k_requests": {
+    "value": 41.3,
+    "unit": "GPU-seconds (H100-equivalent)",
+    "usd": null
+   },
+   "output_tokens": 0.0,
+   "agentic": {
+    "step_accuracy": 0.6817,
+    "loop_success": 0.1296,
+    "steps_unanswered": 0.0,
+    "decisions_unanswered": 0.0
+   },
+   "rank": 15
+  },
+  {
+   "name": "gpt-oss-20b",
+   "family": "Open LLM",
+   "probabilities": "label probabilities at the answer token",
+   "reasons": true,
+   "ids": {
+    "static": "openai/gpt-oss-20b@label-low-think4096",
+    "agentic": "openai/gpt-oss-20b@label-think2048-effortlow"
+   },
+   "link": "https://huggingface.co/openai/gpt-oss-20b",
+   "accuracy": 0.6869,
+   "brier": 0.589,
+   "groups": {
+    "text": 0.7019,
+    "applied": 0.6758,
+    "control": 0.6882
+   },
+   "domains": {
+    "basic_cls": 0.6717,
+    "know": 0.798,
+    "social": 0.4888,
+    "pro": 0.6417,
+    "ret": 0.7139,
+    "struct": 0.7904,
+    "code": 0.7,
+    "fore": 0.4155,
+    "dialog": 0.6951,
+    "batch": 0.6873,
+    "judge": 0.67,
+    "safety": 0.8064,
+    "route": 0.6129
+   },
+   "latency_ms": 183.1,
+   "latency_where": "local GPU (H100)",
+   "cost_per_1k_requests": {
+    "value": 51.4,
+    "unit": "GPU-seconds (H100-equivalent)",
+    "usd": null
+   },
+   "output_tokens": 109.2,
+   "agentic": {
+    "step_accuracy": 0.6583,
+    "loop_success": 0.247,
+    "steps_unanswered": 0.003,
+    "decisions_unanswered": 0.0
+   },
+   "rank": 16
+  },
+  {
+   "name": "OpenAI Decisions API",
+   "family": "System-1 model",
+   "probabilities": "native probabilities",
+   "reasons": false,
+   "ids": {
+    "static": "openai-decisions/gpt-6-luna",
+    "agentic": "openai-decisions/gpt-6-luna"
+   },
+   "link": null,
+   "accuracy": 0.6861,
+   "brier": 0.424,
+   "groups": {
+    "text": 0.671,
+    "applied": 0.6869,
+    "control": 0.7018
+   },
+   "domains": {
+    "basic_cls": 0.6976,
+    "know": 0.7449,
+    "social": 0.3828,
+    "pro": 0.6908,
+    "ret": 0.7323,
+    "struct": 0.7598,
+    "code": 0.6598,
+    "fore": 0.4831,
+    "dialog": 0.7062,
+    "batch": 0.722,
+    "judge": 0.6733,
+    "safety": 0.8095,
+    "route": 0.6501
+   },
+   "latency_ms": 139.5,
+   "latency_where": "network (OpenAI API)",
+   "cost_per_1k_requests": {
+    "value": 0.1112,
+    "unit": "USD",
+    "usd": 0.1112
+   },
+   "output_tokens": 0.0,
+   "agentic": {
+    "step_accuracy": 0.6719,
+    "loop_success": 0.1687,
+    "steps_unanswered": 0.0013,
+    "decisions_unanswered": 0.0075
+   },
+   "rank": 17
+  },
+  {
+   "name": "Decision-2.0-Lux-9B",
+   "family": "System-1 model",
+   "probabilities": "native probabilities",
+   "reasons": false,
+   "ids": {
+    "static": "vllm-sr/Decision-2.0-Lux-9B@78bf3c0",
+    "agentic": null
+   },
+   "link": "https://huggingface.co/vllm-sr/Decision-2.0-Lux-9B",
+   "accuracy": 0.6705,
+   "brier": 0.3974,
+   "groups": {
+    "text": 0.7124,
+    "applied": 0.6615,
+    "control": 0.6379
+   },
+   "domains": {
+    "basic_cls": 0.6933,
+    "know": 0.7623,
+    "social": 0.6103,
+    "pro": 0.651,
+    "ret": 0.7471,
+    "struct": 0.7201,
+    "code": 0.6202,
+    "fore": 0.3984,
+    "dialog": 0.7067,
+    "batch": 0.75,
+    "judge": 0.6058,
+    "safety": 0.7547,
+    "route": 0.5837
+   },
+   "latency_ms": 103.7,
+   "latency_where": "local GPU (H100)",
+   "cost_per_1k_requests": {
+    "value": 144.0,
+    "unit": "GPU-seconds (H100-equivalent)",
+    "usd": null
+   },
+   "output_tokens": 0.0,
+   "agentic": null,
+   "rank": 18
+  },
+  {
+   "name": "Qwen3.5-9B",
+   "family": "Open LLM",
+   "probabilities": "label probabilities at the answer token",
+   "reasons": false,
+   "ids": {
+    "static": "Qwen/Qwen3.5-9B@label-think0",
+    "agentic": "Qwen/Qwen3.5-9B@label-think0"
+   },
+   "link": "https://huggingface.co/Qwen/Qwen3.5-9B",
+   "accuracy": 0.6532,
+   "brier": 0.4607,
+   "groups": {
+    "text": 0.6801,
+    "applied": 0.6281,
+    "control": 0.6642
+   },
+   "domains": {
+    "basic_cls": 0.675,
+    "know": 0.7196,
+    "social": 0.5743,
+    "pro": 0.6551,
+    "ret": 0.693,
+    "struct": 0.6855,
+    "code": 0.6052,
+    "fore": 0.3776,
+    "dialog": 0.5999,
+    "batch": 0.702,
+    "judge": 0.6385,
+    "safety": 0.7768,
+    "route": 0.6042
+   },
+   "latency_ms": 77.1,
+   "latency_where": "local GPU (H100)",
+   "cost_per_1k_requests": {
+    "value": 35.9,
+    "unit": "GPU-seconds (H100-equivalent)",
+    "usd": null
+   },
+   "output_tokens": 0.0,
+   "agentic": {
+    "step_accuracy": 0.6783,
+    "loop_success": 0.0565,
+    "steps_unanswered": 0.0,
+    "decisions_unanswered": 0.0
+   },
+   "rank": 19
+  },
+  {
+   "name": "Decision-2.0-Nox-4B",
+   "family": "System-1 model",
+   "probabilities": "native probabilities",
+   "reasons": false,
+   "ids": {
+    "static": "vllm-sr/Decision-2.0-Nox-4B@25e8f67",
+    "agentic": null
+   },
+   "link": "https://huggingface.co/vllm-sr/Decision-2.0-Nox-4B",
+   "accuracy": 0.6514,
+   "brier": 0.4138,
+   "groups": {
+    "text": 0.6886,
+    "applied": 0.6415,
+    "control": 0.6258
+   },
+   "domains": {
+    "basic_cls": 0.6734,
+    "know": 0.7356,
+    "social": 0.5857,
+    "pro": 0.6218,
+    "ret": 0.7279,
+    "struct": 0.6941,
+    "code": 0.5875,
+    "fore": 0.4011,
+    "dialog": 0.7073,
+    "batch": 0.744,
+    "judge": 0.5832,
+    "safety": 0.738,
+    "route": 0.5905
+   },
+   "latency_ms": 114.2,
+   "latency_where": "local GPU (H100)",
+   "cost_per_1k_requests": {
+    "value": 153.7,
+    "unit": "GPU-seconds (H100-equivalent)",
+    "usd": null
+   },
+   "output_tokens": 0.0,
+   "agentic": null,
+   "rank": 20
+  },
+  {
+   "name": "Qwen3-32B",
+   "family": "Open LLM",
+   "probabilities": "label probabilities at the answer token",
+   "reasons": false,
+   "ids": {
+    "static": "Qwen/Qwen3-32B@label-think0",
+    "agentic": "Qwen/Qwen3-32B@label-think0"
+   },
+   "link": "https://huggingface.co/Qwen/Qwen3-32B",
+   "accuracy": 0.6496,
+   "brier": 0.5428,
+   "groups": {
+    "text": 0.6654,
+    "applied": 0.6383,
+    "control": 0.6504
+   },
+   "domains": {
+    "basic_cls": 0.6314,
+    "know": 0.7294,
+    "social": 0.5581,
+    "pro": 0.6443,
+    "ret": 0.7139,
+    "struct": 0.6745,
+    "code": 0.58,
+    "fore": 0.4068,
+    "dialog": 0.6984,
+    "batch": 0.7213,
+    "judge": 0.6343,
+    "safety": 0.758,
+    "route": 0.5812
+   },
+   "latency_ms": 49.7,
+   "latency_where": "local GPU (H100)",
+   "cost_per_1k_requests": {
+    "value": 112.2,
+    "unit": "GPU-seconds (H100-equivalent)",
+    "usd": null
+   },
+   "output_tokens": 0.0,
+   "agentic": {
+    "step_accuracy": 0.6281,
+    "loop_success": 0.0665,
+    "steps_unanswered": 0.1021,
+    "decisions_unanswered": 0.0
+   },
+   "rank": 21
+  },
+  {
+   "name": "Llama-3.3-70B",
+   "family": "Open LLM",
+   "probabilities": "label probabilities at the answer token",
+   "reasons": false,
+   "ids": {
+    "static": "RedHatAI/Llama-3.3-70B-Instruct@label-think0",
+    "agentic": null
+   },
+   "link": "https://huggingface.co/RedHatAI/Llama-3.3-70B-Instruct",
+   "accuracy": 0.6481,
+   "brier": 0.6401,
+   "groups": {
+    "text": 0.6638,
+    "applied": 0.6342,
+    "control": 0.6533
+   },
+   "domains": {
+    "basic_cls": 0.6408,
+    "know": 0.7195,
+    "social": 0.5544,
+    "pro": 0.6404,
+    "ret": 0.7135,
+    "struct": 0.664,
+    "code": 0.5875,
+    "fore": 0.3989,
+    "dialog": 0.6706,
+    "batch": 0.7327,
+    "judge": 0.594,
+    "safety": 0.7774,
+    "route": 0.6316
+   },
+   "latency_ms": 45.8,
+   "latency_where": "local GPU (H100)",
+   "cost_per_1k_requests": {
+    "value": 241.5,
+    "unit": "GPU-seconds (H100-equivalent)",
+    "usd": null
+   },
+   "output_tokens": 0.0,
+   "agentic": null,
+   "rank": 22
+  },
+  {
+   "name": "Gemma-4-E4B",
+   "family": "Open LLM",
+   "probabilities": "label probabilities at the answer token",
+   "reasons": false,
+   "ids": {
+    "static": "google/gemma-4-E4B-it@label-think0",
+    "agentic": "google/gemma-4-E4B-it@label-think0"
+   },
+   "link": "https://huggingface.co/google/gemma-4-E4B-it",
+   "accuracy": 0.6282,
+   "brier": 0.6025,
+   "groups": {
+    "text": 0.6412,
+    "applied": 0.6136,
+    "control": 0.6376
+   },
+   "domains": {
+    "basic_cls": 0.6436,
+    "know": 0.6595,
+    "social": 0.5803,
+    "pro": 0.616,
+    "ret": 0.6934,
+    "struct": 0.64,
+    "code": 0.5636,
+    "fore": 0.3859,
+    "dialog": 0.6521,
+    "batch": 0.726,
+    "judge": 0.5903,
+    "safety": 0.7544,
+    "route": 0.6051
+   },
+   "latency_ms": 29.4,
+   "latency_where": "local GPU (H100)",
+   "cost_per_1k_requests": {
+    "value": 21.5,
+    "unit": "GPU-seconds (H100-equivalent)",
+    "usd": null
+   },
+   "output_tokens": 0.0,
+   "agentic": {
+    "step_accuracy": 0.6593,
+    "loop_success": 0.0506,
+    "steps_unanswered": 0.0033,
+    "decisions_unanswered": 0.0
+   },
+   "rank": 23
+  },
+  {
+   "name": "Qwen3-8B",
+   "family": "Open LLM",
+   "probabilities": "label probabilities at the answer token",
+   "reasons": false,
+   "ids": {
+    "static": "Qwen/Qwen3-8B@label-think0",
+    "agentic": "Qwen/Qwen3-8B@label-think0"
+   },
+   "link": "https://huggingface.co/Qwen/Qwen3-8B",
+   "accuracy": 0.5925,
+   "brier": 0.7153,
+   "groups": {
+    "text": 0.5935,
+    "applied": 0.5852,
+    "control": 0.6034
+   },
+   "domains": {
+    "basic_cls": 0.5655,
+    "know": 0.6584,
+    "social": 0.4684,
+    "pro": 0.5923,
+    "ret": 0.6454,
+    "struct": 0.6352,
+    "code": 0.5475,
+    "fore": 0.3939,
+    "dialog": 0.5767,
+    "batch": 0.6867,
+    "judge": 0.593,
+    "safety": 0.6953,
+    "route": 0.5397
+   },
+   "latency_ms": 30.4,
+   "latency_where": "local GPU (H100)",
+   "cost_per_1k_requests": {
+    "value": 26.6,
+    "unit": "GPU-seconds (H100-equivalent)",
+    "usd": null
+   },
+   "output_tokens": 0.0,
+   "agentic": {
+    "step_accuracy": 0.5993,
+    "loop_success": 0.0247,
+    "steps_unanswered": 0.1021,
+    "decisions_unanswered": 0.0
+   },
+   "rank": 24
+  },
+  {
+   "name": "Llama-3.1-8B",
+   "family": "Open LLM",
+   "probabilities": "label probabilities at the answer token",
+   "reasons": false,
+   "ids": {
+    "static": "meta-llama/Llama-3.1-8B-Instruct@label-think0",
+    "agentic": null
+   },
+   "link": "https://huggingface.co/meta-llama/Llama-3.1-8B-Instruct",
+   "accuracy": 0.5314,
+   "brier": 0.6452,
+   "groups": {
+    "text": 0.5402,
+    "applied": 0.5173,
+    "control": 0.5447
+   },
+   "domains": {
+    "basic_cls": 0.5225,
+    "know": 0.5682,
+    "social": 0.5007,
+    "pro": 0.5179,
+    "ret": 0.5514,
+    "struct": 0.538,
+    "code": 0.4844,
+    "fore": 0.3735,
+    "dialog": 0.5324,
+    "batch": 0.6307,
+    "judge": 0.5027,
+    "safety": 0.6653,
+    "route": 0.5015
+   },
+   "latency_ms": 21.5,
+   "latency_where": "local GPU (H100)",
+   "cost_per_1k_requests": {
+    "value": 24.5,
+    "unit": "GPU-seconds (H100-equivalent)",
+    "usd": null
+   },
+   "output_tokens": 0.0,
+   "agentic": null,
+   "rank": 25
+  },
+  {
+   "name": "Decision-2.0-Kai-0.6B",
+   "family": "System-1 model",
+   "probabilities": "native probabilities",
+   "reasons": false,
+   "ids": {
+    "static": "vllm-sr/Decision-2.0-Kai-0.6B@cd49ea3",
+    "agentic": "vllm-sr/Decision-2.0-Kai-0.6B"
+   },
+   "link": "https://huggingface.co/vllm-sr/Decision-2.0-Kai-0.6B",
+   "accuracy": 0.5029,
+   "brier": 0.5367,
+   "groups": {
+    "text": 0.492,
+    "applied": 0.5133,
+    "control": 0.4982
+   },
+   "domains": {
+    "basic_cls": 0.5465,
+    "know": 0.5105,
+    "social": 0.2999,
+    "pro": 0.4983,
+    "ret": 0.5979,
+    "struct": 0.4988,
+    "code": 0.4858,
+    "fore": 0.3434,
+    "dialog": 0.5363,
+    "batch": 0.646,
+    "judge": 0.4789,
+    "safety": 0.5742,
+    "route": 0.4604
+   },
+   "latency_ms": 72.0,
+   "latency_where": "local GPU (H100)",
+   "cost_per_1k_requests": {
+    "value": 93.1,
+    "unit": "GPU-seconds (H100-equivalent)",
+    "usd": null
+   },
+   "output_tokens": 0.0,
+   "agentic": {
+    "step_accuracy": 0.3421,
+    "loop_success": 0.0219,
+    "steps_unanswered": 0.4095,
+    "decisions_unanswered": 0.0717
+   },
+   "rank": 26
+  },
+  {
+   "name": "Laya (421M)",
+   "family": "System-1 model",
+   "probabilities": "native probabilities",
+   "reasons": false,
+   "ids": {
+    "static": "convaiinnovations/laya",
+    "agentic": "convaiinnovations/laya"
+   },
+   "link": "https://huggingface.co/convaiinnovations/laya",
+   "accuracy": 0.4447,
+   "brier": 0.6605,
+   "groups": {
+    "text": 0.4634,
+    "applied": 0.4173,
+    "control": 0.469
+   },
+   "domains": {
+    "basic_cls": 0.4721,
+    "know": 0.4593,
+    "social": 0.4537,
+    "pro": 0.3871,
+    "ret": 0.4218,
+    "struct": 0.3957,
+    "code": 0.447,
+    "fore": 0.2537,
+    "dialog": 0.4766,
+    "batch": 0.5227,
+    "judge": 0.4169,
+    "safety": 0.6087,
+    "route": 0.4236
+   },
+   "latency_ms": 136.5,
+   "latency_where": "local GPU (H100)",
+   "cost_per_1k_requests": {
+    "value": 11.7,
+    "unit": "GPU-seconds (H100-equivalent)",
+    "usd": null
+   },
+   "output_tokens": 0.0,
+   "agentic": {
+    "step_accuracy": 0.4138,
+    "loop_success": 0.0134,
+    "steps_unanswered": 0.0007,
+    "decisions_unanswered": 0.0084
+   },
+   "rank": 27
+  },
+  {
+   "name": "CLM-v0.1-8B",
+   "family": "System-1 model",
+   "probabilities": "native probabilities",
+   "reasons": false,
+   "ids": {
+    "static": "Contrastive-LM/CLM-v0.1-8B",
+    "agentic": "Contrastive-LM/CLM-v0.1-8B"
+   },
+   "link": "https://huggingface.co/Contrastive-LM/CLM-v0.1-8B",
+   "accuracy": 0.4143,
+   "brier": 0.7492,
+   "groups": {
+    "text": 0.3941,
+    "applied": 0.38,
+    "control": 0.4936
+   },
+   "domains": {
+    "basic_cls": 0.3564,
+    "know": 0.4833,
+    "social": 0.2207,
+    "pro": 0.2817,
+    "ret": 0.4587,
+    "struct": 0.4065,
+    "code": 0.4009,
+    "fore": 0.3553,
+    "dialog": 0.4083,
+    "batch": 0.422,
+    "judge": 0.4599,
+    "safety": 0.5474,
+    "route": 0.4958
+   },
+   "latency_ms": 40.8,
+   "latency_where": "local GPU (H100)",
+   "cost_per_1k_requests": {
+    "value": 19.3,
+    "unit": "GPU-seconds (H100-equivalent)",
+    "usd": null
+   },
+   "output_tokens": 0.0,
+   "agentic": {
+    "step_accuracy": 0.4063,
+    "loop_success": 0.017,
+    "steps_unanswered": 0.0,
+    "decisions_unanswered": 0.0
+   },
+   "rank": 28
+  },
+  {
+   "name": "Qwen3-0.6B",
+   "family": "Open LLM",
+   "probabilities": "label probabilities at the answer token",
+   "reasons": false,
+   "ids": {
+    "static": "Qwen/Qwen3-0.6B@label-think0",
+    "agentic": "Qwen/Qwen3-0.6B@label-think0"
+   },
+   "link": "https://huggingface.co/Qwen/Qwen3-0.6B",
+   "accuracy": 0.3924,
+   "brier": 0.9367,
+   "groups": {
+    "text": 0.3568,
+    "applied": 0.3929,
+    "control": 0.432
+   },
+   "domains": {
+    "basic_cls": 0.2429,
+    "know": 0.4482,
+    "social": 0.3671,
+    "pro": 0.3472,
+    "ret": 0.4122,
+    "struct": 0.4751,
+    "code": 0.4245,
+    "fore": 0.2484,
+    "dialog": 0.3965,
+    "batch": 0.4147,
+    "judge": 0.4669,
+    "safety": 0.4215,
+    "route": 0.3911
+   },
+   "latency_ms": 27.5,
+   "latency_where": "local GPU (H100)",
+   "cost_per_1k_requests": {
+    "value": 8.4,
+    "unit": "GPU-seconds (H100-equivalent)",
+    "usd": null
+   },
+   "output_tokens": 0.0,
+   "agentic": {
+    "step_accuracy": 0.4386,
+    "loop_success": 0.0179,
+    "steps_unanswered": 0.1021,
+    "decisions_unanswered": 0.0
+   },
+   "rank": 29
+  },
+  {
+   "name": "Decision-2.0-Sol-2B",
+   "family": "System-1 model",
+   "probabilities": "native probabilities",
+   "reasons": false,
+   "ids": {
+    "static": null,
+    "agentic": "vllm-sr/Decision-2.0-Sol-2B"
+   },
+   "link": "https://huggingface.co/vllm-sr/Decision-2.0-Sol-2B",
+   "accuracy": null,
+   "brier": null,
+   "groups": null,
+   "domains": null,
+   "latency_ms": 92.5,
+   "latency_where": "local GPU (A100)",
+   "cost_per_1k_requests": null,
+   "output_tokens": 0.0,
+   "agentic": {
+    "step_accuracy": 0.4638,
+    "loop_success": 0.0312,
+    "steps_unanswered": 0.2469,
+    "decisions_unanswered": 0.0
+   },
+   "rank": null
+  }
+ ]
+}

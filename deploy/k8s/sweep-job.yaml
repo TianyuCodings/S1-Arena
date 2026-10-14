@@ -1,0 +1,102 @@
+# Sharded sweep on Kubernetes (see docs/deploy.md). Two stages, run one after the other:
+#   1. static: every model on every static task       (kubectl apply -f deploy/k8s/sweep-job.yaml, job s1arena-static)
+#   2. envs:   every model on every environment       (job s1arena-envs; realtime environments read the
+#              model's latency from its stage-1 runs, so start it when stage 1 has finished)
+# Each pod takes every N-th task / environment (--shard $JOB_COMPLETION_INDEX/N). All pods share one ReadWriteMany
+# volume for results/ (shards write disjoint files), so the cache makes reruns resume. Replace REGISTRY, and the
+# storage class if your cluster names its RWX class differently.
+# Secret: kubectl create secret generic s1arena-keys --from-literal=AI_GATEWAY_API_KEY=... --from-literal=HF_TOKEN=...
+apiVersion: v1
+kind: PersistentVolumeClaim
+metadata:
+  name: s1arena-results
+spec:
+  accessModes: [ReadWriteMany]
+  storageClassName: efs-sc  # e.g. EFS on EKS, a NFS class elsewhere
+  resources:
+    requests:
+      storage: 200Gi
+---
+apiVersion: batch/v1
+kind: Job
+metadata:
+  name: s1arena-static
+spec:
+  completionMode: Indexed
+  completions: 8
+  parallelism: 8
+  backoffLimitPerIndex: 3
+  template:
+    spec:
+      restartPolicy: Never
+      containers:
+        - name: sweep
+          image: REGISTRY/s1arena:core
+          args: ["sweep", "sweeps/full.toml", "--only", "static", "--shard", "$(JOB_COMPLETION_INDEX)/8"]
+          envFrom: [{secretRef: {name: s1arena-keys}}]
+          resources:
+            requests: {cpu: "2", memory: 8Gi}
+          volumeMounts:
+            - {name: shared, mountPath: /app/results, subPath: results}
+            - {name: shared, mountPath: /app/data_local, subPath: data_local}
+            - {name: shared, mountPath: /app/.cache, subPath: cache}
+      volumes:
+        - name: shared
+          persistentVolumeClaim: {claimName: s1arena-results}
+---
+apiVersion: batch/v1
+kind: Job
+metadata:
+  name: s1arena-envs
+spec:
+  completionMode: Indexed
+  completions: 16
+  parallelism: 16
+  backoffLimitPerIndex: 3
+  template:
+    spec:
+      restartPolicy: Never
+      containers:
+        - name: sweep
+          image: REGISTRY/s1arena:core
+          # environments that cannot start in this image (BALROG games, WebShop without its server) are skipped,
+          # not cached; s1arena-envs-balrog plays the games
+          args: ["sweep", "sweeps/full.toml", "--only", "envs", "--shard", "$(JOB_COMPLETION_INDEX)/16"]
+          envFrom: [{secretRef: {name: s1arena-keys}}]
+          env:
+            - {name: S1ARENA_WEBSHOP_URL, value: "http://s1arena-webshop:3000"}  # optional, see docs/deploy.md
+          resources:
+            requests: {cpu: "4", memory: 16Gi}
+          volumeMounts:
+            - {name: shared, mountPath: /app/results, subPath: results}
+            - {name: shared, mountPath: /app/data_local, subPath: data_local}
+            - {name: shared, mountPath: /app/.cache, subPath: cache}
+      volumes:
+        - name: shared
+          persistentVolumeClaim: {claimName: s1arena-results}
+---
+apiVersion: batch/v1
+kind: Job
+metadata:
+  name: s1arena-envs-balrog
+spec:
+  completionMode: Indexed
+  completions: 8
+  parallelism: 8
+  backoffLimitPerIndex: 3
+  template:
+    spec:
+      restartPolicy: Never
+      containers:
+        - name: sweep
+          image: REGISTRY/s1arena:balrog
+          args: ["sweep", "sweeps/full.toml", "--only", "envs", "--envs", "game/", "--shard", "$(JOB_COMPLETION_INDEX)/8"]
+          envFrom: [{secretRef: {name: s1arena-keys}}]
+          resources:
+            requests: {cpu: "4", memory: 16Gi}
+          volumeMounts:
+            - {name: shared, mountPath: /app/results, subPath: results}
+            - {name: shared, mountPath: /app/.cache, subPath: cache}
+      volumes:
+        - name: shared
+          persistentVolumeClaim: {claimName: s1arena-results}

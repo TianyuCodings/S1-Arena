@@ -1,0 +1,108 @@
+# Every task and every closed-loop environment, for the models of the leaderboard. Copy this file and keep the models
+# you want to run; see docs/models.md for what each adapter needs (keys, GPUs, extras).
+# Run:    uv run s1arena sweep sweeps/full.toml [--models <spec> ...]
+# Status: uv run s1arena sweep-status sweeps/full.toml
+# Report: uv run s1arena sweep-report sweeps/full.toml
+name = "full"
+tasks = [""]   # prefixes; "" = all tasks
+envs = [""]    # prefixes; "" = all environments, with each environment's full set of seeds
+limit = 0      # first N requests per task; 0 = all
+
+[defaults]
+k = 1
+workers = 8
+env_workers = 4
+
+# System-1 models
+[[models]]
+spec = "jev"
+budget_usd = 300
+
+[[models]]
+spec = "decisions"            # GPT-6 Luna through OpenAI's Decisions API
+
+[[models]]
+spec = "ordecisions"          # Microsoft-Decision-1 through OpenRouter's Decisions API
+
+[[models]]
+spec = "decision2:vllm-sr/Decision-2.0-Vega-27B"
+
+[[models]]
+spec = "decision2:vllm-sr/Decision-2.0-Lux-9B"
+
+[[models]]
+spec = "decision2:vllm-sr/Decision-2.0-Nox-4B"
+
+[[models]]
+spec = "decision2:vllm-sr/Decision-2.0-Sol-2B"
+
+[[models]]
+spec = "decision2:vllm-sr/Decision-2.0-Kai-0.6B"
+
+[[models]]
+spec = "laya:convaiinnovations/laya"
+
+[[models]]
+spec = "clm:Contrastive-LM/CLM-v0.1-8B"
+
+# Closed LLMs (verbalized probabilities), through a GitHub Copilot subscription
+[[models]]
+spec = "copilot:claude-opus-5.5@effort=low"
+
+[[models]]
+spec = "copilot:gpt-6-astra@effort=low"
+
+[[models]]
+spec = "copilot:grok-4.7@effort=low"
+
+[[models]]
+spec = "copilot:gpt-6-sol@effort=none"
+
+[[models]]
+spec = "copilot:gpt-5.6-sol@effort=none"
+
+[[models]]
+spec = "copilot:gpt-6-luna@effort=none"
+
+[[models]]
+spec = "copilot:gpt-5.6-luna@effort=none"
+
+# Open LLMs on vLLM (label probabilities at the answer token)
+[[models]]
+spec = "lm:google/gemma-4-31B-it"
+
+[[models]]
+spec = "lm:openai/gpt-oss-120b@think=4096,effort=low"
+
+[[models]]
+spec = "lm:Qwen/Qwen3.8-27B"
+
+[[models]]
+spec = "lm:google/gemma-4-26B-A4B-it"
+
+[[models]]
+spec = "dgemma:google/diffusiongemma-26B-A4B-it"
+
+[[models]]
+spec = "lm:openai/gpt-oss-20b@think=4096,effort=low"
+
+[[models]]
+spec = "lm:Qwen/Qwen3.5-9B"
+
+[[models]]
+spec = "lm:Qwen/Qwen3-32B"
+
+[[models]]
+spec = "lm:RedHatAI/Llama-3.3-70B-Instruct"
+
+[[models]]
+spec = "lm:google/gemma-4-E4B-it"
+
+[[models]]
+spec = "lm:Qwen/Qwen3-8B"
+
+[[models]]
+spec = "lm:meta-llama/Llama-3.1-8B-Instruct"
+
+[[models]]
+spec = "lm:Qwen/Qwen3-0.6B"

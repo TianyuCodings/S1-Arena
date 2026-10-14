@@ -1,0 +1,60 @@
+[project]
+name = "s1arena"
+version = "0.1.0"
+description = "S1-Arena: a benchmark of typed decisions with probabilities, for System-1 models and LLMs."
+license = "Apache-2.0"
+readme = "README.md"
+requires-python = ">=3.11"
+dependencies = [
+  "pydantic>=2.7",
+  "datasets>=3.0",
+  "httpx>=0.27",
+  "numpy>=1.26",
+  "pycountry>=24.6",
+  "tiktoken>=0.7",
+  "tzdata>=2024.1",
+]
+
+[project.scripts]
+s1arena = "s1arena.cli:main"
+
+[project.optional-dependencies]
+envs = [
+    "ale-py>=0.10",
+    "chess>=1.11",
+    "gymnasium[mujoco]>=1.1",
+    "highway-env>=1.10",
+    "metaworld>=3.0",
+    "minigrid>=3.0",
+    "miniwob>=1.0",
+    "ocatari>=2.0",
+    "pyflyt>=0.29",
+    "tau2 ; python_full_version >= '3.12' and python_full_version < '3.14'",
+    "textworld>=1.6",
+    "vizdoom>=1.2",
+    "websockets>=13",
+]
+alfworld = [
+    "fast-downward-textworld>=20.6.4",
+]
+copilot = [
+    "github-copilot-sdk>=1.0.16",
+]
+
+[dependency-groups]
+dev = [
+  "pytest>=8.0",
+]
+
+[build-system]
+requires = ["hatchling"]
+build-backend = "hatchling.build"
+
+[tool.hatch.build.targets.wheel]
+packages = ["s1arena"]
+
+[tool.uv.sources]
+tau2 = { git = "https://github.com/sierra-research/tau2-bench", rev = "b7ea9074c1cba482b30687fecdb5c8425fd6f619" }
+
+[tool.pytest.ini_options]
+testpaths = ["tests"]

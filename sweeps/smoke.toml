@@ -1,0 +1,19 @@
+# Small end-to-end check of every task and environment: 3 requests per task, 1 episode per environment with at most
+# 10 decisions. It needs no keys. Add a model of your own to check it on everything.
+# Run:    uv run s1arena sweep sweeps/smoke.toml
+# Status: uv run s1arena sweep-status sweeps/smoke.toml
+name = "smoke"
+tasks = [""]   # prefixes; "" = all tasks
+envs = [""]    # prefixes; "" = all environments
+limit = 3      # first N requests per task
+episodes = 1
+max_decisions = 10
+
+[defaults]
+k = 1
+workers = 8
+env_workers = 4
+
+[[models]]
+spec = "random"
+latency_ms = 0   # a fixed latency for the realtime environments (random has no static runs to take it from)

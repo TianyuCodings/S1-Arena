@@ -1,0 +1,22 @@
+# secrets
+.env
+.env.*
+
+# python
+__pycache__/
+*.pyc
+.venv/
+*.egg-info/
+.pytest_cache/
+
+# data: download it (`s1arena download`) or build it (`s1arena build`); never commit it
+/data/
+/data_local/
+.cache/
+
+# run outputs
+/results/
+*.log
+_vizdoom.ini
+_vizdoom/
+.DS_Store

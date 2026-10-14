@@ -1,0 +1,12 @@
+# Adds the Copilot SDK (with its CLI runtime) to a S1-Arena image (deploy/Dockerfile); with CHROMIUM=1 also Chromium
+# for the MiniWoB environments, which Selenium starts as google-chrome. Chrome needs --no-sandbox as root in a container.
+ARG BASE=s1arena:core
+FROM ${BASE}
+ARG CHROMIUM=1
+RUN if [ "$CHROMIUM" = 1 ]; then \
+      apt-get update && apt-get install -y --no-install-recommends chromium chromium-driver && rm -rf /var/lib/apt/lists/* \
+      && ln -sf /usr/bin/chromium /usr/bin/google-chrome \
+      && mkdir -p /etc/chromium.d \
+      && echo 'export CHROMIUM_FLAGS="$CHROMIUM_FLAGS --no-sandbox --disable-dev-shm-usage"' > /etc/chromium.d/zz-container; \
+    fi
+RUN pip install "github-copilot-sdk==1.0.16" && python -c "from copilot._cli_download import download_cli; print(download_cli())"

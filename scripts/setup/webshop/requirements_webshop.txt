@@ -1,0 +1,26 @@
+# WebShop (princeton-nlp/WebShop @ 64fa2a5) requirements.txt pins, for the text environment and index building.
+# Installed with: uv pip install -r requirements_webshop.txt --exclude-newer 2022-08-01 (transitive dependencies as of WebShop's release; no compiler on the box)
+# Left out (not imported by the text environment): env, gdown, gradio, pytest, requests_mock, train.
+beautifulsoup4==4.11.1
+cleantext==1.1.4
+Flask==2.1.2
+gym==0.24.0
+numpy==1.22.4
+pandas==1.4.2
+pyserini==0.17.0
+PyYAML==6.0
+rank_bm25==0.2.2
+requests==2.27.1
+rich==12.4.4
+scikit_learn==1.1.1
+selenium==4.2.0
+spacy==3.3.0
+thefuzz==0.19.0
+torch @ https://download.pytorch.org/whl/cpu/torch-1.11.0%2Bcpu-cp38-cp38-linux_x86_64.whl
+tqdm==4.64.0
+transformers==4.19.2
+# Not pinned by WebShop: setup.sh installs faiss-cpu with conda; Flask 2.1.2 needs a Werkzeug of its time (3.x removed url_quote).
+faiss-cpu==1.7.2
+Werkzeug==2.1.2
+# goal.py loads spacy.load("en_core_web_sm"): the model release matching spaCy 3.3.0
+en_core_web_sm @ https://github.com/explosion/spacy-models/releases/download/en_core_web_sm-3.3.0/en_core_web_sm-3.3.0-py3-none-any.whl
