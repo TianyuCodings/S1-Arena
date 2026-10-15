@@ -27,6 +27,7 @@ jobs:
           python-version: "3.12"
       # Rebuild from leaderboard/results.json so the page always matches the committed numbers.
       - run: python scripts/build_site.py --out _site/index.html
+      - run: cp -R site/media _site/media  # the closed-loop video and its poster (committed; not rebuilt here)
       - uses: actions/configure-pages@v5
       - uses: actions/upload-pages-artifact@v3
         with:

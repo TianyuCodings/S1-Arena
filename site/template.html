@@ -88,6 +88,48 @@ input[type="search"] { font: inherit; font-size: 13px; padding: 6px 10px; border
 #plot .lbl { font-weight: 500; fill: var(--ink); paint-order: stroke; stroke: var(--surface); stroke-width: 3px; stroke-linejoin: round; }
 .caption { color: var(--muted); font-size: 12px; margin: 4px 0 0; }
 
+/* example card */
+.ex { min-width: 0; background: var(--surface-2); border: 1px solid var(--line); border-radius: 10px; padding: 12px 14px 14px; font-size: 13px; margin-top: 14px; }
+.ex-body { display: grid; grid-template-columns: minmax(0, 1fr); gap: 0 26px; }
+.ex-body > div { min-width: 0; }
+@media (min-width: 860px) {
+  .ex-body { grid-template-columns: minmax(0, 1.25fr) minmax(0, 1fr); }
+  .ex-body.loop { grid-template-columns: minmax(0, 400px) minmax(0, 1fr); }
+  .ex-body > div > :first-child { margin-top: 0; }
+}
+.ex[hidden] { display: none; }
+.ex-h { display: flex; flex-wrap: wrap; gap: 6px 10px; align-items: center; justify-content: space-between; margin-bottom: 6px; }
+.ex-h h2 { font-size: 15px; font-weight: 600; margin: 0; }
+.ex-h .dom { display: block; color: var(--muted); font-size: 12px; font-weight: 400; margin-top: 1px; }
+.ex-nav { display: inline-flex; gap: 6px; align-items: center; font-size: 12px; color: var(--ink-2); }
+.ex-nav button { font: inherit; font-size: 14px; line-height: 1; width: 30px; height: 28px; border: 1px solid var(--line); border-radius: 6px; background: var(--surface); color: var(--ink); cursor: pointer; }
+.ex-nav button:hover { border-color: var(--ink-2); }
+.ex .sec { font-size: 11px; text-transform: uppercase; letter-spacing: 0.06em; color: var(--muted); margin: 10px 0 4px; }
+.badge { font-size: 11px; font-weight: 600; color: var(--accent); background: var(--accent-soft); border-radius: 4px; padding: 1px 6px; margin-right: 6px; }
+.ex .ins { margin: 6px 0 0; color: var(--ink); font-weight: 500; }
+.ex dl { margin: 0; display: grid; gap: 5px; }
+.ex dl > div { min-width: 0; }
+.ex dt { font-size: 11px; color: var(--muted); font-family: var(--font-mono); }
+.ex dd { margin: 0; color: var(--ink-2); white-space: pre-wrap; overflow-wrap: anywhere; }
+.ex dd.mono { font-family: var(--font-mono); font-size: 11.5px; line-height: 1.35; }
+.ex ol { list-style: none; margin: 0; padding: 0; display: grid; gap: 4px; }
+.ex ol li { display: grid; grid-template-columns: auto minmax(0, 1fr); gap: 8px; align-items: baseline; color: var(--ink-2); }
+.ex ol code, .ex .ans code { font-family: var(--font-mono); font-size: 11.5px; color: var(--ink); background: var(--surface); border: 1px solid var(--line); border-radius: 4px; padding: 0 5px; overflow-wrap: anywhere; }
+.ex ol li.gold code { border-color: var(--s1); box-shadow: inset 0 0 0 1px var(--s1); }
+.ex ol li.gold span::after { content: "  ✓ gold"; color: var(--s1); font-weight: 600; white-space: nowrap; }
+.ex ol li.more { display: block; color: var(--muted); }
+.ex .how { color: var(--muted); font-size: 12px; margin: 10px 0 8px; }
+.ex .ans-btn { font: inherit; font-size: 12.5px; font-weight: 500; padding: 5px 12px; border: 1px solid var(--line); border-radius: 6px; background: var(--surface); color: var(--ink); cursor: pointer; }
+.ex .ans-btn:hover { border-color: var(--ink-2); }
+.ex .ans { margin-top: 8px; padding: 8px 10px; border-left: 3px solid var(--s1); background: var(--surface); border-radius: 0 6px 6px 0; color: var(--ink-2); }
+.ex .ans[hidden] { display: none; }
+.ex .ans p { margin: 0 0 4px; }
+.ex .ans p:last-child { margin: 0; }
+.ex .src { color: var(--muted); font-size: 11.5px; margin: 12px 0 0; overflow-wrap: anywhere; }
+.ex .src a { color: var(--accent); }
+.ex video { display: block; width: 100%; height: auto; aspect-ratio: 1 / 1; border-radius: 8px; background: #1b1f25; }
+.ex .vcap { font-size: 12px; color: var(--ink-2); margin: 6px 0 4px; }
+
 /* table */
 .scroll { overflow-x: auto; margin-top: 14px; border-top: 1px solid var(--line); }
 table { width: 100%; border-collapse: collapse; font-size: 13.5px; min-width: 720px; }
@@ -177,6 +219,7 @@ footer { color: var(--muted); font-size: 12px; margin-top: 18px; display: flex; 
       <div id="plot"></div>
       <p class="caption" id="caption"></p>
     </section>
+    <section class="ex" id="ex" aria-labelledby="ex-title" hidden></section>
     <div class="scroll"><table><thead><tr id="head"></tr></thead><tbody id="body"></tbody></table></div>
     <div class="note" id="note"></div>
   </main>
@@ -468,6 +511,66 @@ uv run s1arena sweep-report my_full.toml</pre>
   plot.addEventListener("focusout", hideTip);
   window.addEventListener("scroll", hideTip, { passive: true });
 
+  /* example card: real requests of the selected tab (leaderboard/examples.json), one at a time */
+  const EXDATA = (() => { try { return JSON.parse(document.getElementById("s1-examples").textContent); } catch (e) { return null; } })() || {};
+  const EXS = EXDATA.examples || {}, EXDOM = EXDATA.domains || {}, VIDEO = EXDATA.video || null;
+  const ex = { i: 0, open: false };
+  const safeUrl = u => /^https?:\/\//.test(u || "") ? u : null;
+  function exList() {
+    const { t, v } = view();
+    if (t.id === "agent") return v.id === "loops" ? (EXDATA.closed_loop ? [EXDATA.closed_loop] : []) : ["step", "game", "embodied"].flatMap(d => EXS[d] || []);
+    const doms = t.id === "overall" ? DOMAINS.map(d => d.id) : v.id ? [v.id] : DOMAINS.filter(d => d.group === t.id).map(d => d.id);
+    return doms.flatMap(d => EXS[d] || []);
+  }
+  function drawExample() {
+    const host = $("ex"), list = exList();
+    host.hidden = !list.length;
+    if (!list.length) { host.innerHTML = ""; return; }
+    ex.i = (ex.i + list.length) % list.length;
+    const e = list[ex.i], loop = e.domain === "closed_loop", opts = e.options || [];
+    const n = opts.length + (e.more_options || 0);
+    const gold = e.gold && e.gold.label != null ? String(e.gold.label) : null;
+    const text = id => { const o = opts.find(o => o[0] === id); return o && o[1] ? o[1] : ""; };
+    const how = e.type === "boolean" ? "The model answers with a probability that the statement is true."
+      : `The model answers with a probability distribution over the ${n} ${e.type === "score" ? "levels" : "options"}.`;
+    const domName = loop ? "Closed loop" : (EXDOM[e.domain] || e.domain);
+    const out = VIDEO && VIDEO.outcome || {};
+    const video = loop && VIDEO ? `<video src="${esc(VIDEO.video)}" poster="${esc(VIDEO.poster)}" autoplay loop muted playsinline preload="auto" aria-label="${esc(VIDEO.model)} driving in ${esc(e.task)}, seed ${VIDEO.seed}"></video>
+      <p class="vcap">${esc(VIDEO.env)} · ${esc(VIDEO.model)} · seed ${VIDEO.seed} · ${out.success ? "success" : "failure"}${"crashed" in out ? (out.crashed ? ", collision" : ", no collision") : ""} · return ${out.score == null ? "–" : (+out.score).toFixed(2)} · ${VIDEO.trace.length} decisions. A replay of the recorded episode; the replay reproduces its outcome.</p>
+` : "";
+    const opt = ([id, desc]) => `<li class="${ex.open && id === gold ? "gold" : ""}"><code>${esc(id)}</code><span>${esc(desc || (e.type === "boolean" ? (id === "true" ? "the statement is true" : "the statement is false") : ""))}</span></li>`;
+    let answer;
+    if (loop) {
+      const c = e.chosen || {};
+      answer = `<p>A closed-loop decision has no gold answer: the environment scores the whole episode. ${esc(e.scoring || "")}</p>` +
+        (c.action ? `<p>In the video, ${esc(c.model)} chose <code>${esc(c.action)}</code> here (p ${(+c.p).toFixed(2)}).</p>` : "");
+    } else {
+      const dist = e.gold && e.gold.dist;
+      answer = `<p>Gold answer: <code>${esc(gold)}</code>${text(gold) ? " · " + esc(text(gold)) : ""}</p>` +
+        (dist ? `<p>Gold distribution (annotators): ${dist.map(([k, p]) => `${esc(k)} ${Math.round(100 * p)}%`).join(", ")}</p>` : "");
+    }
+    const url = safeUrl(e.url);
+    host.innerHTML = `<div class="ex-h"><h2 id="ex-title">${loop ? "Example decision" : "Example question"}<span class="dom">${esc(domName)}</span></h2>` +
+      (list.length > 1 ? `<div class="ex-nav"><button type="button" data-d="-1" aria-label="Previous example">‹</button><span class="num">${ex.i + 1} / ${list.length}</span><button type="button" data-d="1" aria-label="Next example">›</button></div>` : "") + `</div>` +
+      `<div class="ex-body${loop ? " loop" : ""}"><div>` + video + (loop ? `</div><div><div class="sec">The first decision request</div>` : "") +
+      `<p class="ins"><span class="badge">${esc(e.type)}</span>${esc(e.instructions)}</p>` +
+      `<div class="sec">State</div><dl>${(e.state || []).map(([k, val]) => `<div><dt>${esc(k)}</dt><dd class="${/\n/.test(val) ? "mono" : ""}">${esc(val)}</dd></div>`).join("")}</dl>` +
+      (loop ? "" : `</div><div>`) +
+      `<div class="sec">${e.type === "score" ? "Levels" : "Options"}</div><ol>${opts.map(opt).join("")}${e.more_options ? `<li class="more">and ${e.more_options} more</li>` : ""}</ol>` +
+      (e.more_questions ? `<p class="how">The same request asks ${e.more_questions} more question${e.more_questions > 1 ? "s" : ""} about this state (not shown).</p>` : "") +
+      `<p class="how">${how}</p>` +
+      `<button type="button" class="ans-btn" aria-expanded="${ex.open}">${ex.open ? "Hide" : "Show"} ${loop ? "the model's choice" : "answer"}</button>` +
+      `<div class="ans" ${ex.open ? "" : "hidden"}>${answer}</div>` +
+      `<p class="src"><code>${esc(e.task)}</code> · Source: ${url ? `<a href="${esc(url)}" target="_blank" rel="noopener">${esc(e.source)}</a>` : esc(e.source)} · License: ${esc(e.license)}</p></div></div>`;
+    const v = host.querySelector("video");
+    if (v) { v.muted = true; const p = v.play(); if (p && p.catch) p.catch(() => {}); }
+  }
+  $("ex").addEventListener("click", e => {
+    const nav = e.target.closest(".ex-nav button");
+    if (nav) { ex.i += +nav.dataset.d; ex.open = false; drawExample(); $("ex").querySelector(`.ex-nav button[data-d="${nav.dataset.d}"]`).focus(); return; }
+    if (e.target.closest(".ans-btn")) { ex.open = !ex.open; drawExample(); $("ex").querySelector(".ans-btn").focus(); }
+  });
+
   /* render */
   function render() {
     const { v } = view();
@@ -479,7 +582,7 @@ uv run s1arena sweep-report my_full.toml</pre>
     drawFigure(v, scored, scored.filter(famOk), match);
     drawTable(v, scored, scored.filter(m => famOk(m) && match.has(m.i)));
   }
-  function update(hash = true) { drawTabs(); render(); if (hash) writeHash(); }
+  function update(hash = true) { drawTabs(); render(); ex.i = 0; ex.open = false; drawExample(); if (hash) writeHash(); }
   let lastW = 0;
   new ResizeObserver(() => { const w = plot.clientWidth; if (w && Math.abs(w - lastW) > 2) { lastW = w; render(); } }).observe(plot);
   readHash();

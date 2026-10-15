@@ -1,0 +1,82 @@
+{
+ "env": "realtime/highway/intersection",
+ "env_source": "highway-env intersection-v0 (Leurent, 2018)",
+ "model": "Jev 1.13",
+ "model_id": "typesafe-ai/jev",
+ "seed": 9,
+ "mode": "realtime",
+ "assumed_latency_ms": 320.0,
+ "hold_steps": 0,
+ "outcome": {
+  "success": true,
+  "score": 4.5498,
+  "crashed": false,
+  "distance_m": 77.0,
+  "mean_speed_mps": 6.39,
+  "sim_time_s": 12.0,
+  "env_steps": 12,
+  "arrived": true
+ },
+ "trace": [
+  {
+   "action": "IDLE",
+   "p": 0.62
+  },
+  {
+   "action": "IDLE",
+   "p": 0.59
+  },
+  {
+   "action": "SLOWER",
+   "p": 0.54
+  },
+  {
+   "action": "IDLE",
+   "p": 0.51
+  },
+  {
+   "action": "IDLE",
+   "p": 0.54
+  },
+  {
+   "action": "IDLE",
+   "p": 0.54
+  },
+  {
+   "action": "IDLE",
+   "p": 0.6
+  },
+  {
+   "action": "IDLE",
+   "p": 0.51
+  },
+  {
+   "action": "IDLE",
+   "p": 0.56
+  },
+  {
+   "action": "FASTER",
+   "p": 0.49
+  },
+  {
+   "action": "IDLE",
+   "p": 0.63
+  },
+  {
+   "action": "IDLE",
+   "p": 0.87
+  }
+ ],
+ "replay": {
+  "outcome_matches_record": true,
+  "rendering_changes_nothing": true,
+  "decisions_replayed": true,
+  "second_replay_same_frames": true
+ },
+ "video": "media/intersection_jev_seed9.mp4",
+ "poster": "media/intersection_jev_seed9.jpg",
+ "fps": 15,
+ "frames": 211,
+ "duration_s": 14.1,
+ "bytes": 107816
+}
