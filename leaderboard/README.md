@@ -17,3 +17,8 @@ Per model:
 | `cost_per_1k_requests` | `value` and `unit`: USD for hosted models, H100-equivalent GPU-seconds for local models |
 | `output_tokens` | mean tokens the model writes per request (0 for a label read) |
 | `agentic` | `step_accuracy` (static agent steps), `loop_success` (closed-loop environments), shares without an answer |
+
+## Leaderboard website
+
+After a change to `results.json`, run `python scripts/build_site.py` to rebuild `site/index.html` (see
+`site/README.md`). The GitHub Pages workflow also rebuilds it on every push to `main`.

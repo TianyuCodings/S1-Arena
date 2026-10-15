@@ -1,0 +1,489 @@
+<title>S1-Arena Leaderboard</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Instrument+Sans:wght@400;500;600;700&family=IBM+Plex+Mono:wght@400;500&display=swap">
+<style>
+/* Template of the leaderboard page. scripts/build_site.py embeds leaderboard/results.json and writes site/index.html;
+   edit this file, not index.html. Layout: header, one card with the category tabs, filters, the latency-accuracy
+   frontier of the selected tab and its ranked table, then the definitions and the "add your model" block. */
+:root {
+  --bg: #f4f5f7;
+  --surface: #ffffff;
+  --surface-2: #f7f8fa;
+  --ink: #14171c;
+  --ink-2: #48505c;
+  --muted: #69717e;
+  --line: #e2e5ea;
+  --accent: #2f56c8;
+  --accent-soft: #e8eefc;
+  --s1: #009E73;
+  --closed: #0072B2;
+  --open: #D55E00;
+  --other: #7a8391;
+  --font-ui: "Instrument Sans", system-ui, -apple-system, "Segoe UI", sans-serif;
+  --font-mono: "IBM Plex Mono", ui-monospace, "SF Mono", Menlo, monospace;
+}
+@media (prefers-color-scheme: dark) {
+  :root:not([data-theme="light"]) {
+    --bg: #0e1115; --surface: #161a20; --surface-2: #1b2027; --ink: #e9ecf1; --ink-2: #b6bdc8; --muted: #8f98a6;
+    --line: #2a3039; --accent: #86a6ff; --accent-soft: #1e2840; --s1: #3fc59d; --closed: #59a9e6; --open: #f08a4b;
+    --other: #8f98a6; color-scheme: dark;
+  }
+}
+:root[data-theme="dark"] {
+  --bg: #0e1115; --surface: #161a20; --surface-2: #1b2027; --ink: #e9ecf1; --ink-2: #b6bdc8; --muted: #8f98a6;
+  --line: #2a3039; --accent: #86a6ff; --accent-soft: #1e2840; --s1: #3fc59d; --closed: #59a9e6; --open: #f08a4b;
+  --other: #8f98a6; color-scheme: dark;
+}
+* { box-sizing: border-box; }
+html { -webkit-text-size-adjust: 100%; }
+body { margin: 0; background: var(--bg); color: var(--ink); font-family: var(--font-ui); font-size: 14px; line-height: 1.45; }
+a { color: var(--accent); }
+.wrap { max-width: 1180px; margin: 0 auto; padding: 28px 16px 56px; }
+button:focus-visible, input:focus-visible, th:focus-visible, a:focus-visible, .pt:focus-visible { outline: 2px solid var(--accent); outline-offset: 2px; }
+.num { font-variant-numeric: tabular-nums; }
+
+/* header */
+.top { display: flex; flex-wrap: wrap; gap: 14px 24px; align-items: flex-end; justify-content: space-between; margin-bottom: 18px; }
+.top > div { min-width: 0; }
+.top h1 { font-size: 30px; font-weight: 700; letter-spacing: -0.02em; margin: 0; }
+.top .q { font-size: 17px; color: var(--ink); margin: 2px 0 6px; text-wrap: balance; }
+.top .facts { color: var(--ink-2); margin: 0; }
+.links { display: flex; flex-wrap: wrap; gap: 8px; align-items: center; }
+.links a, .links button { font: inherit; font-size: 13px; font-weight: 500; display: inline-flex; gap: 6px; align-items: center; padding: 6px 12px; border: 1px solid var(--line); border-radius: 8px; background: var(--surface); color: var(--ink); text-decoration: none; cursor: pointer; }
+.links a:hover, .links button:hover { border-color: var(--ink-2); }
+.links .soon { color: var(--muted); }
+
+/* card */
+.stage { background: var(--surface); border: 1px solid var(--line); border-radius: 12px; padding: 18px 18px 6px; min-width: 0; }
+.tabs, .subs, .chips { display: flex; flex-wrap: wrap; gap: 6px; }
+.tab { font: inherit; font-size: 13.5px; font-weight: 500; padding: 7px 14px; border-radius: 999px; border: 1px solid var(--line); background: var(--surface); color: var(--ink-2); cursor: pointer; white-space: nowrap; }
+.tab[aria-selected="true"] { background: var(--ink); color: var(--surface); border-color: var(--ink); }
+.subs { margin-top: 10px; }
+.subs[hidden] { display: none; }
+.sub { font: inherit; font-size: 12.5px; padding: 4px 10px; border-radius: 6px; border: 1px solid transparent; background: none; color: var(--ink-2); cursor: pointer; white-space: nowrap; }
+.sub[aria-pressed="true"] { background: var(--accent-soft); color: var(--accent); border-color: color-mix(in oklab, var(--accent) 35%, transparent); font-weight: 600; }
+.desc { color: var(--ink-2); margin: 12px 0 0; max-width: 90ch; }
+.filters { display: flex; flex-wrap: wrap; gap: 10px; align-items: center; justify-content: space-between; margin: 14px 0 6px; }
+.filters > * { min-width: 0; }
+.chip { font: inherit; font-size: 12.5px; padding: 4px 10px; border-radius: 6px; border: 1px solid var(--line); background: var(--surface-2); color: var(--ink-2); cursor: pointer; display: inline-flex; gap: 6px; align-items: center; white-space: nowrap; }
+.chip[aria-pressed="true"] { border-color: var(--ink-2); color: var(--ink); background: var(--surface); }
+input[type="search"] { font: inherit; font-size: 13px; padding: 6px 10px; border: 1px solid var(--line); border-radius: 8px; background: var(--surface); color: var(--ink); width: 220px; max-width: 100%; }
+.shape { flex: none; display: inline-block; vertical-align: middle; }
+
+/* figure */
+.fig { border-top: 1px solid var(--line); margin-top: 8px; padding-top: 14px; }
+.fig-h { display: flex; flex-wrap: wrap; gap: 6px 18px; justify-content: space-between; align-items: baseline; }
+.fig-h h2 { font-size: 15px; font-weight: 600; margin: 0; }
+.legend { display: flex; flex-wrap: wrap; gap: 6px 14px; color: var(--ink-2); font-size: 12px; align-items: center; }
+.legend span { display: inline-flex; gap: 6px; align-items: center; }
+#plot { width: 100%; margin-top: 6px; }
+#plot svg { display: block; overflow: visible; }
+#plot text { fill: var(--ink-2); font-family: var(--font-ui); }
+#plot .grid line { stroke: var(--line); }
+#plot .frontier { fill: none; stroke: var(--ink); stroke-width: 1.5; stroke-dasharray: 4 3; opacity: 0.6; }
+#plot .pt { stroke: var(--surface); stroke-width: 2; cursor: pointer; transition: opacity 0.15s; }
+#plot .pt.dim { opacity: 0.18; }
+#plot .pt.hl { stroke: var(--ink); stroke-width: 2.5; }
+#plot .lbl { font-weight: 500; fill: var(--ink); paint-order: stroke; stroke: var(--surface); stroke-width: 3px; stroke-linejoin: round; }
+.caption { color: var(--muted); font-size: 12px; margin: 4px 0 0; }
+
+/* table */
+.scroll { overflow-x: auto; margin-top: 14px; border-top: 1px solid var(--line); }
+table { width: 100%; border-collapse: collapse; font-size: 13.5px; min-width: 720px; }
+th { text-align: left; font-weight: 600; font-size: 12px; color: var(--muted); padding: 9px 10px; border-bottom: 1px solid var(--line); white-space: nowrap; user-select: none; }
+th[data-k] { cursor: pointer; }
+th[data-k]:hover { color: var(--ink); }
+th[aria-sort] { color: var(--ink); }
+th.r, td.r { text-align: right; }
+td { padding: 9px 10px; border-bottom: 1px solid var(--line); white-space: nowrap; }
+tbody tr:hover td, tbody tr.hl td { background: var(--surface-2); }
+td.rank { font-weight: 700; color: var(--ink-2); width: 52px; }
+.model { display: inline-flex; gap: 8px; align-items: center; font-weight: 600; }
+.model .nm { min-width: 0; }
+.model .nm .shape { margin-right: 8px; vertical-align: -1px; }
+.model a { color: inherit; text-decoration: none; border-bottom: 1px dotted var(--muted); }
+.model a:hover { color: var(--accent); border-bottom-color: var(--accent); }
+.tag { font-size: 11px; font-weight: 500; color: var(--muted); border: 1px solid var(--line); border-radius: 4px; padding: 0 5px; }
+.score { display: inline-flex; gap: 10px; align-items: center; justify-content: flex-end; }
+.score .trk { width: 90px; height: 6px; background: var(--line); border-radius: 3px; overflow: hidden; }
+.score .trk i { display: block; height: 6px; border-radius: 3px; background: var(--accent); }
+.score b { min-width: 40px; text-align: right; font-weight: 700; }
+td.na { color: var(--muted); }
+.unit { color: var(--muted); font-size: 12px; }
+.note { color: var(--muted); font-size: 12px; padding: 10px 2px 12px; }
+
+/* below the card */
+.more { display: grid; grid-template-columns: minmax(0, 1fr) minmax(0, 1fr); gap: 16px; margin-top: 16px; }
+@media (max-width: 860px) { .more { grid-template-columns: minmax(0, 1fr); } }
+.box { background: var(--surface); border: 1px solid var(--line); border-radius: 12px; padding: 16px 18px; min-width: 0; }
+.box h2 { font-size: 15px; font-weight: 600; margin: 0 0 8px; }
+.box p { color: var(--ink-2); margin: 0 0 10px; }
+.box dl { margin: 0; display: grid; gap: 8px; }
+.box dt { font-weight: 600; font-size: 13px; }
+.box dd { margin: 0; color: var(--ink-2); }
+pre { background: var(--surface-2); border: 1px solid var(--line); border-radius: 8px; padding: 10px 12px; font-family: var(--font-mono); font-size: 12px; line-height: 1.55; overflow-x: auto; margin: 0 0 10px; color: var(--ink); }
+pre .c { color: var(--muted); }
+footer { color: var(--muted); font-size: 12px; margin-top: 18px; display: flex; flex-wrap: wrap; gap: 6px 18px; justify-content: space-between; }
+
+.tip { position: fixed; pointer-events: none; z-index: 20; background: var(--ink); color: var(--bg); font-size: 12px; padding: 7px 9px; border-radius: 6px; max-width: 280px; line-height: 1.4; }
+.tip b { font-weight: 600; }
+.tip .k { opacity: 0.7; }
+
+@media (max-width: 560px) {
+  .wrap { padding-top: 20px; }
+  .top h1 { font-size: 26px; }
+  .stage { padding: 14px 12px 4px; }
+  .filters input[type="search"] { width: 100%; }
+  .tab { padding: 6px 11px; font-size: 13px; }
+  table { min-width: 0; font-size: 13px; }
+  th, td { padding: 8px 7px; }
+  td.rank { width: auto; }
+  .score .trk { display: none; }  /* the number stays in view; the table scrolls sideways for the rest */
+  td.m { white-space: normal; min-width: 150px; }
+  .model { flex-wrap: wrap; row-gap: 2px; }
+}
+</style>
+<!--BODY-->
+<div class="wrap">
+  <header class="top">
+    <div>
+      <h1>S1-Arena</h1>
+      <p class="q">Which decisions can be left to System 1?</p>
+      <p class="facts" id="facts"></p>
+    </div>
+    <nav class="links" aria-label="Project links">
+      <!-- TODO: replace # with the arXiv page of the paper once it is out. -->
+      <a href="#" class="soon" title="The arXiv link follows soon">Paper (soon)</a>
+      <a href="https://github.com/TianyuCodings/S1-Arena" target="_blank" rel="noopener">Code</a>
+      <a href="https://huggingface.co/datasets/C-Tianyu/S1-Arena" target="_blank" rel="noopener">Dataset</a>
+      <button type="button" id="theme" aria-label="Color theme">Theme: auto</button>
+    </nav>
+  </header>
+
+  <main class="stage">
+    <div class="tabs" role="tablist" aria-label="Category" id="tabs"></div>
+    <div class="subs" id="subs" aria-label="Domain"></div>
+    <p class="desc" id="desc"></p>
+    <div class="filters">
+      <div class="chips" id="fams" aria-label="Model family"></div>
+      <input type="search" id="q" placeholder="Search models" aria-label="Search models">
+    </div>
+    <section class="fig" aria-labelledby="fig-title">
+      <div class="fig-h">
+        <h2 id="fig-title"></h2>
+        <div class="legend" id="legend"></div>
+      </div>
+      <div id="plot"></div>
+      <p class="caption" id="caption"></p>
+    </section>
+    <div class="scroll"><table><thead><tr id="head"></tr></thead><tbody id="body"></tbody></table></div>
+    <div class="note" id="note"></div>
+  </main>
+
+  <div class="more">
+    <section class="box">
+      <h2>How to read the numbers</h2>
+      <dl id="defs"></dl>
+    </section>
+    <section class="box">
+      <h2>Add your model</h2>
+      <p>Write an adapter that returns one probability distribution per question, check it, and run the full plan.</p>
+<pre>git clone https://github.com/TianyuCodings/S1-Arena
+cd S1-Arena && uv sync
+uv run s1arena download          <span class="c"># the requests, from Hugging Face</span>
+cp templates/model_template.py s1arena/models/my_model.py
+uv run s1arena check-model &lt;spec&gt;  <span class="c"># three toy requests</span>
+<span class="c"># add &lt;spec&gt; to a copy of sweeps/full.toml, then</span>
+uv run s1arena sweep my_full.toml --models &lt;spec&gt;
+uv run s1arena sweep-report my_full.toml</pre>
+      <p>Open a pull request with the adapter, the plan and the report files from <code>results/summary/</code>. <a href="https://github.com/TianyuCodings/S1-Arena/blob/main/CONTRIBUTING.md" target="_blank" rel="noopener">CONTRIBUTING.md</a> explains each step, and how to add a task or an environment.</p>
+    </section>
+  </div>
+  <footer><span id="updated"></span><span>Numbers from <code>leaderboard/results.json</code>; aggregate scores only.</span></footer>
+</div>
+<div class="tip" id="tip" hidden></div>
+<!--DATA-->
+<script>
+(() => {
+  const DATA = JSON.parse(document.getElementById("s1-data").textContent);
+  const NA = DATA.non_agentic || {}, AG = DATA.agentic || {};
+  const FAMKEY = { "System-1 model": "s1", "Closed LLM": "closed", "Open LLM": "open" };
+  const FAMS = [["s1", "System-1"], ["closed", "Closed LLM"], ["open", "Open LLM"]];
+  const FAMNAME = { s1: "System-1 model", closed: "Closed LLM", open: "Open LLM", other: "Other" };
+  const MODELS = (DATA.models || []).map((m, i) => ({ ...m, i, fk: FAMKEY[m.family] || "other" }));
+  const DOMAINS = NA.domains || [];
+  const pct = v => v == null ? null : 100 * v;
+  const ag = (m, k) => m.agentic ? m.agentic[k] : null;
+  const cap = s => s ? s[0].toUpperCase() + s.slice(1) : "";
+  const esc = s => String(s).replace(/[&<>"]/g, c => ({ "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;" }[c]));
+  const $ = id => document.getElementById(id);
+
+  /* Tabs: Overall, one tab per non-agentic group (with its domains as sub-tabs), and the agentic group. */
+  const TABS = [{ id: "overall", label: "Overall", subs: [{ id: "", kind: "static", title: "Overall accuracy",
+    desc: `${cap(NA.accuracy || "")}.`, get: m => pct(m.accuracy) }] }];
+  for (const [g, name] of Object.entries(NA.groups || {})) {
+    const ds = DOMAINS.filter(d => d.group === g);
+    TABS.push({ id: g, label: name, subs: [
+      { id: "", label: "Average", kind: "static", title: name, desc: `Accuracy on the ${ds.length} domains of this group: ${ds.map(d => d.name).join("; ")}.`, get: m => pct(m.groups ? m.groups[g] : null) },
+      ...ds.map(d => ({ id: d.id, label: d.short, kind: "static", title: d.name, desc: `Accuracy on one domain: ${d.name}.`, get: m => pct(m.domains ? m.domains[d.id] : null) })),
+    ] });
+  }
+  if (MODELS.some(m => m.agentic)) {
+    const steps = m => pct(ag(m, "step_accuracy")), loops = m => pct(ag(m, "loop_success"));
+    TABS.push({ id: "agent", label: "Agent and action", subs: [
+      { id: "", label: "Single steps", kind: "agent", title: "Agent single steps", desc: `${cap(AG.step_accuracy || "")}.`, get: steps,
+        other: ["Closed loop (%)", loops], noans: m => pct(ag(m, "steps_unanswered")) },
+      { id: "loops", label: "Closed loop", kind: "agent", title: "Closed-loop success", desc: `${cap(AG.loop_success || "")}.`, get: loops,
+        other: ["Single steps (%)", steps], noans: m => pct(ag(m, "decisions_unanswered")) },
+    ] });
+  }
+
+  const st = { tab: "overall", sub: "", fam: "all", q: "", sort: null, dir: -1 };
+  const view = () => { const t = TABS.find(t => t.id === st.tab) || TABS[0]; return { t, v: t.subs.find(s => s.id === st.sub) || t.subs[0] }; };
+
+  /* formatting */
+  const nf = new Intl.NumberFormat("en-US");
+  const fmtPct = v => v == null ? "–" : v.toFixed(1);
+  const fmtLat = ms => ms == null ? "–" : ms >= 1000 ? (ms / 1000).toFixed(2) + " s" : Math.round(ms) + " ms";
+  const fmtCost = m => {
+    const c = m.cost_per_1k_requests;
+    if (!c) return "–";
+    if (c.usd != null) return "$" + (c.usd < 1 ? c.usd.toFixed(3) : c.usd.toFixed(2));
+    if (/^GPU-seconds/.test(c.unit)) return nf.format(Math.round(c.value)) + ' <span class="unit">GPU-s</span>';
+    return esc(c.value + " " + c.unit);
+  };
+  const costKey = m => { const c = m.cost_per_1k_requests; return !c ? null : c.usd != null ? c.usd : 1e9 + c.value; };
+  function shapeSvg(fk, x, y, r) {
+    if (fk === "closed") return `<rect x="${(x - r * 0.9).toFixed(1)}" y="${(y - r * 0.9).toFixed(1)}" width="${(1.8 * r).toFixed(1)}" height="${(1.8 * r).toFixed(1)}" rx="1.5"`;
+    if (fk === "open") return `<path d="M${x.toFixed(1)} ${(y - r * 1.15).toFixed(1)} L${(x + r * 1.1).toFixed(1)} ${(y + r * 0.85).toFixed(1)} L${(x - r * 1.1).toFixed(1)} ${(y + r * 0.85).toFixed(1)} Z"`;
+    if (fk === "other") return `<path d="M${x.toFixed(1)} ${(y - r).toFixed(1)} L${(x + r).toFixed(1)} ${y.toFixed(1)} L${x.toFixed(1)} ${(y + r).toFixed(1)} L${(x - r).toFixed(1)} ${y.toFixed(1)} Z"`;
+    return `<circle cx="${x.toFixed(1)}" cy="${y.toFixed(1)}" r="${r}"`;
+  }
+  const icon = fk => `<svg class="shape" width="12" height="12" viewBox="0 0 12 12" aria-hidden="true">${shapeSvg(fk, 6, 6.4, 4.4)} fill="var(--${fk})"/></svg>`;
+
+  /* header, definitions, legend */
+  const nStatic = MODELS.filter(m => m.accuracy != null).length;
+  $("facts").textContent = [NA.requests != null && `${nf.format(NA.requests)} requests in ${DOMAINS.length} domains`,
+    AG.environments != null && `${AG.environments} closed-loop environments`, `${MODELS.length} models`].filter(Boolean).join(" · ");
+  $("updated").textContent = DATA.updated ? `Updated ${DATA.updated}` : "";
+  $("defs").innerHTML = [["Accuracy", NA.accuracy], ["Brier score", NA.brier], ["Latency", NA.latency], ["Cost", NA.cost],
+    ["Single steps", AG.step_accuracy], ["Closed loop", AG.loop_success]].filter(d => d[1])
+    .map(([k, v]) => `<div><dt>${k}</dt><dd>${esc(cap(v))}.</dd></div>`).join("");
+  $("legend").innerHTML = FAMS.map(([k, l]) => `<span>${icon(k)}${l}</span>`).join("") +
+    `<span><svg width="22" height="8" aria-hidden="true"><line x1="0" y1="4" x2="22" y2="4" stroke="currentColor" stroke-width="1.5" stroke-dasharray="4 3"/></svg>Frontier</span>`;
+
+  /* controls */
+  function drawTabs() {
+    $("tabs").innerHTML = TABS.map(t => `<button class="tab" role="tab" data-t="${t.id}" aria-selected="${t.id === st.tab}">${esc(t.label)}</button>`).join("");
+    const { t } = view();
+    const subs = $("subs");
+    subs.hidden = t.subs.length < 2;
+    subs.innerHTML = t.subs.map(s => `<button class="sub" data-s="${s.id}" aria-pressed="${s.id === st.sub}" title="${esc(s.title)}">${esc(s.label || s.title)}</button>`).join("");
+  }
+  $("tabs").addEventListener("click", e => { const b = e.target.closest(".tab"); if (!b) return; st.tab = b.dataset.t; st.sub = ""; st.sort = null; update(); });
+  $("tabs").addEventListener("keydown", e => {
+    if (e.key !== "ArrowRight" && e.key !== "ArrowLeft") return;
+    const i = TABS.findIndex(t => t.id === st.tab), n = TABS[(i + (e.key === "ArrowRight" ? 1 : TABS.length - 1)) % TABS.length];
+    st.tab = n.id; st.sub = ""; st.sort = null; update(); $("tabs").querySelector(`[data-t="${n.id}"]`).focus();
+  });
+  $("subs").addEventListener("click", e => { const b = e.target.closest(".sub"); if (!b) return; st.sub = b.dataset.s; st.sort = null; update(); });
+  $("fams").innerHTML = [["all", "All families"], ...FAMS].map(([k, l]) => `<button class="chip" data-f="${k}" aria-pressed="${k === st.fam}">${k === "all" ? "" : icon(k)}${l}</button>`).join("");
+  $("fams").addEventListener("click", e => { const b = e.target.closest(".chip"); if (!b) return; st.fam = b.dataset.f; $("fams").querySelectorAll(".chip").forEach(x => x.setAttribute("aria-pressed", x === b)); render(); });
+  $("q").addEventListener("input", e => { st.q = e.target.value.trim().toLowerCase(); render(); });
+
+  /* theme: auto -> light -> dark; the choice is a per-viewer convenience */
+  const THEMES = ["auto", "light", "dark"];
+  function setTheme(t) {
+    if (t === "auto") document.documentElement.removeAttribute("data-theme"); else document.documentElement.setAttribute("data-theme", t);
+    $("theme").textContent = "Theme: " + t;
+    try { localStorage.setItem("s1arena-theme", t); } catch (e) {}
+  }
+  $("theme").addEventListener("click", () => { const cur = document.documentElement.getAttribute("data-theme") || "auto"; setTheme(THEMES[(THEMES.indexOf(cur) + 1) % 3]); render(); });
+  try { const t = localStorage.getItem("s1arena-theme"); if (THEMES.includes(t)) setTheme(t); } catch (e) {}
+
+  /* URL hash keeps the selected tab, e.g. #applied/code */
+  function readHash() {
+    const [t, s] = decodeURIComponent(location.hash.slice(1)).split("/");
+    const tab = TABS.find(x => x.id === t);
+    if (!tab) return;
+    st.tab = tab.id; st.sub = tab.subs.some(x => x.id === (s || "")) ? (s || "") : "";
+  }
+  function writeHash() {
+    const h = st.tab === "overall" ? "" : "#" + st.tab + (st.sub ? "/" + st.sub : "");
+    try { history.replaceState(null, "", h || location.pathname + location.search); } catch (e) {}
+  }
+  window.addEventListener("hashchange", () => { readHash(); st.sort = null; update(false); });
+
+  /* table */
+  function columns(v, overall) {
+    const cols = [{ k: "rank", l: "Rank" }, { k: "model", l: "Model", val: m => m.name, dir: 1 },
+      { k: "score", l: v.kind === "agent" && v.id === "loops" ? "Success (%)" : "Accuracy (%)", r: 1, val: v.get, dir: -1 }];
+    if (v.kind === "agent") {
+      cols.push({ k: "other", l: v.other[0], r: 1, val: v.other[1], dir: -1 }, { k: "noans", l: "No answer (%)", r: 1, val: v.noans, dir: 1, title: "Share of decisions without a valid answer" });
+    } else {
+      cols.push({ k: "brier", l: overall ? "Brier ↓" : "Brier, all ↓", r: 1, val: m => m.brier, dir: 1, title: "Brier score over all non-agentic domains; lower is better" });
+    }
+    cols.push({ k: "lat", l: "Latency p50", r: 1, val: m => m.latency_ms, dir: 1, title: "Median time of one request" });
+    if (v.kind === "static") cols.push({ k: "cost", l: "Cost / 1k req.", r: 1, val: costKey, dir: 1, title: "USD for hosted models, H100-equivalent GPU-seconds for local models" },
+      { k: "tok", l: "Output tokens", r: 1, val: m => m.output_tokens, dir: 1, title: "Mean tokens written per request" });
+    return cols;
+  }
+  function cell(c, m, v, max, rank) {
+    switch (c.k) {
+      case "rank": return `<td class="rank num">${rank}</td>`;
+      case "model": return `<td class="m"><span class="model"><span class="nm">${icon(m.fk)}${m.link ? `<a href="${esc(m.link)}" target="_blank" rel="noopener">${esc(m.name)}</a>` : esc(m.name)}</span>${m.reasons ? '<span class="tag" title="Writes a reasoning text before it answers">reasoning</span>' : ""}</span></td>`;
+      case "score": { const s = v.get(m); return `<td class="r"><span class="score"><span class="trk"><i style="width:${(100 * s / max).toFixed(1)}%"></i></span><b class="num">${fmtPct(s)}</b></span></td>`; }
+      case "brier": return `<td class="r num${m.brier == null ? " na" : ""}">${m.brier == null ? "–" : m.brier.toFixed(3)}</td>`;
+      case "lat": return `<td class="r num" title="${esc(m.latency_where || "")}">${fmtLat(m.latency_ms)}</td>`;
+      case "cost": return `<td class="r num${m.cost_per_1k_requests ? "" : " na"}">${fmtCost(m)}</td>`;
+      case "tok": return `<td class="r num">${m.output_tokens == null ? "–" : Math.round(m.output_tokens)}</td>`;
+      default: { const x = c.val(m); return `<td class="r num${x == null ? " na" : ""}">${fmtPct(x)}</td>`; }
+    }
+  }
+  function drawTable(v, scored, shown) {
+    const cols = columns(v, st.tab === "overall");
+    const max = Math.max(...scored.map(v.get));
+    const rankOf = m => 1 + scored.filter(o => v.get(o) > v.get(m)).length;  // rank among all models of this tab
+    let rows = [...shown].sort((a, b) => v.get(b) - v.get(a));
+    if (st.sort) {
+      const c = cols.find(c => c.k === st.sort);
+      if (c) rows.sort((a, b) => { const x = c.val(a), y = c.val(b); if (x == null && y == null) return 0; if (x == null) return 1; if (y == null) return -1; return typeof x === "string" ? st.dir * x.localeCompare(y) : st.dir * (x - y); });
+    }
+    const sorted = st.sort || "score";
+    $("head").innerHTML = cols.map(c => `<th class="${c.r ? "r" : ""}"${c.val ? ` tabindex="0" data-k="${c.k}"` : ""}${c.title ? ` title="${esc(c.title)}"` : ""}${c.k === sorted ? ` aria-sort="${(st.sort ? st.dir : -1) > 0 ? "ascending" : "descending"}"` : ""}>${esc(c.l)}${c.k === sorted ? ((st.sort ? st.dir : -1) > 0 ? " ▲" : " ▼") : ""}</th>`).join("");
+    $("body").innerHTML = rows.map(m => `<tr data-i="${m.i}">${cols.map(c => cell(c, m, v, max, rankOf(m))).join("")}</tr>`).join("") ||
+      `<tr><td colspan="${cols.length}" class="na">No model matches the filters.</td></tr>`;
+    const missing = MODELS.filter(m => v.get(m) == null).map(m => m.name);
+    $("note").textContent = `${rows.length} of ${scored.length} models shown. Rank is over all models in this tab.` +
+      (missing.length ? ` No result here yet: ${missing.join(", ")}.` : "") +
+      (v.kind === "static" ? " Cost per 1,000 requests: USD for hosted models, H100-equivalent GPU-seconds for local models; the two units are not comparable, and sorting by cost lists USD first." : " Latency is measured on the non-agentic requests.");
+  }
+  $("head").addEventListener("click", e => {
+    const th = e.target.closest("th[data-k]"); if (!th) return;
+    const { v } = view(), c = columns(v, st.tab === "overall").find(c => c.k === th.dataset.k);
+    if (st.sort === c.k) st.dir = -st.dir; else { st.sort = c.k; st.dir = c.dir; }
+    if (c.k === "score" && st.dir === -1) st.sort = null;
+    render();
+  });
+  $("head").addEventListener("keydown", e => { if (e.key === "Enter" || e.key === " ") { e.preventDefault(); e.target.click(); } });
+  $("body").addEventListener("mouseover", e => { const tr = e.target.closest("tr[data-i]"); highlight(tr ? +tr.dataset.i : null); });
+  $("body").addEventListener("mouseleave", () => highlight(null));
+  function highlight(i) { $("plot").querySelectorAll(".pt").forEach(p => p.classList.toggle("hl", +p.dataset.i === i)); }
+
+  /* figure: score against latency (log scale) with the Pareto frontier */
+  const canvas = document.createElement("canvas").getContext("2d");
+  const textW = (s, fs) => { canvas.font = `500 ${fs}px ${getComputedStyle(document.body).fontFamily}`; return canvas.measureText(s).width; };
+  function drawFigure(v, scored, shown, match) {
+    const host = $("plot");
+    const W = Math.max(280, host.clientWidth || 640), H = Math.round(Math.min(420, Math.max(260, W * 0.5)));
+    const L = 44, R = 12, T = 12, B = 40;
+    const all = scored.filter(m => m.latency_ms != null), pts = shown.filter(m => m.latency_ms != null);
+    if (!all.length) { host.innerHTML = '<p class="caption">No latency data in this tab.</p>'; return; }
+    const lats = all.map(m => m.latency_ms), vals = all.map(v.get);
+    const x0 = Math.log10(Math.min(...lats)) - 0.12, x1 = Math.log10(Math.max(...lats)) + 0.12;
+    const lx = ms => L + (Math.log10(ms) - x0) / (x1 - x0) * (W - L - R);
+    const step = Math.max(...vals) - Math.min(...vals) > 50 ? 20 : 10;
+    const lo = Math.max(0, Math.floor((Math.min(...vals) - 2) / step) * step), hi = Math.min(100, Math.ceil((Math.max(...vals) + 2) / step) * step);
+    const y0 = lo - 0.07 * (hi - lo);  // a small margin below the lowest tick leaves room for labels
+    const ly = s => T + (1 - (s - y0) / (hi - y0)) * (H - T - B);
+    const xt = [10, 30, 100, 300, 1000, 3000, 10000, 30000].filter(t => Math.log10(t) >= x0 && Math.log10(t) <= x1);
+    const yt = []; for (let s = lo; s <= hi + 1e-9; s += step) yt.push(s);
+    const r = W < 480 ? 4.8 : 5.6, fs = W < 480 ? 10.5 : 11.5;
+    // frontier: going right in latency, keep each model that scores higher than every faster one
+    const fr = []; let best = -Infinity;
+    [...pts].sort((a, b) => a.latency_ms - b.latency_ms || v.get(b) - v.get(a)).forEach(m => { if (v.get(m) > best) { best = v.get(m); fr.push(m); } });
+    let path = ""; fr.forEach((m, k) => { const x = lx(m.latency_ms).toFixed(1), y = ly(v.get(m)).toFixed(1); path += k ? ` H${x} V${y}` : `M${x} ${y}`; });
+    if (fr.length) path += ` H${(W - R).toFixed(1)}`;
+    // labels: frontier models, plus search matches when there are few; placed greedily without overlaps
+    const want = new Map(fr.map(m => [m.i, m]));
+    if (st.q && match.size && match.size <= 8) pts.filter(m => match.has(m.i)).forEach(m => want.set(m.i, m));
+    const boxes = pts.map(m => ({ x: lx(m.latency_ms) - r - 1, y: ly(v.get(m)) - r - 1, w: 2 * r + 2, h: 2 * r + 2, i: m.i }));
+    const overlap = (a, b) => Math.max(0, Math.min(a.x + a.w, b.x + b.w) - Math.max(a.x, b.x)) * Math.max(0, Math.min(a.y + a.h, b.y + b.h) - Math.max(a.y, b.y));
+    const placed = [], labels = [];
+    [...want.values()].sort((a, b) => v.get(b) - v.get(a)).forEach(m => {
+      const x = lx(m.latency_ms), y = ly(v.get(m)), w = textW(m.name, fs) + 2, h = fs + 3.5, g = r + 4;
+      // beside the point first, then above or below it, then shifted up or down with a leader line
+      const cands = [[x + g, y - h / 2, "start"], [x - g - w, y - h / 2, "end"], [x - w / 2, y - g - h, "middle"], [x - w / 2, y + g, "middle"]];
+      for (const dy of [-10, 10, -18, 18, -28, 28, -38, 38]) cands.push([x + g, y - h / 2 + dy, "start"], [x - g - w, y - h / 2 + dy, "end"]);
+      let pick = null, best = Infinity;
+      for (const [bx, by, anchor] of cands) {
+        const b = { x: bx, y: by, w, h };
+        const out = (bx < L - 2 || bx + w > W - 2 || by < 0 || by + h > H - B) ? 1e6 : 0;
+        const onLabels = placed.reduce((s, p) => s + overlap(b, p), 0);
+        const cost = out + onLabels * 3 + boxes.reduce((s, p) => s + (p.i === m.i ? 0 : overlap(b, p)), 0);
+        if (cost < best) { best = cost; pick = { ...b, anchor, onLabels }; }
+        if (cost === 0) break;
+      }
+      if (!pick || best > 8) return;  // no free place: the point keeps its tooltip
+      placed.push(pick);
+      const tx = pick.anchor === "start" ? pick.x + 1 : pick.anchor === "end" ? pick.x + w - 1 : pick.x + w / 2;
+      const cy = pick.y + h / 2;
+      if (Math.abs(cy - y) > h * 0.6 && pick.anchor !== "middle") {
+        const ex = pick.anchor === "start" ? pick.x - 1 : pick.x + w + 1, len = Math.hypot(ex - x, cy - y) || 1;
+        labels.push(`<line x1="${(x + (ex - x) / len * (r + 1.5)).toFixed(1)}" y1="${(y + (cy - y) / len * (r + 1.5)).toFixed(1)}" x2="${ex.toFixed(1)}" y2="${cy.toFixed(1)}" stroke="var(--muted)" stroke-width="0.75"/>`);
+      }
+      labels.push(`<text class="lbl" x="${tx.toFixed(1)}" y="${(pick.y + fs).toFixed(1)}" text-anchor="${pick.anchor}" style="font-size:${fs}px">${esc(m.name)}</text>`);
+    });
+    const dimmed = m => st.q && !match.has(m.i);
+    host.innerHTML = `<svg width="${W}" height="${H}" viewBox="0 0 ${W} ${H}" role="img" aria-label="${esc(v.title)} against latency for ${pts.length} models">
+      <g class="grid">${xt.map(t => `<line x1="${lx(t).toFixed(1)}" x2="${lx(t).toFixed(1)}" y1="${T}" y2="${H - B}"/>`).join("")}${yt.map(s => `<line x1="${L}" x2="${W - R}" y1="${ly(s).toFixed(1)}" y2="${ly(s).toFixed(1)}"/>`).join("")}</g>
+      ${xt.map(t => `<text x="${lx(t).toFixed(1)}" y="${H - B + 16}" text-anchor="middle" font-size="11">${t >= 1000 ? t / 1000 + " s" : t + " ms"}</text>`).join("")}
+      ${yt.map(s => `<text x="${L - 7}" y="${(ly(s) + 4).toFixed(1)}" text-anchor="end" font-size="11">${s}</text>`).join("")}
+      <text x="${((L + W - R) / 2).toFixed(1)}" y="${H - 5}" text-anchor="middle" font-size="12">Latency per request (median, log scale)</text>
+      <text transform="translate(12 ${((T + H - B) / 2).toFixed(1)}) rotate(-90)" text-anchor="middle" font-size="12">${v.kind === "agent" && v.id === "loops" ? "Success (%)" : "Accuracy (%)"}</text>
+      ${path ? `<path class="frontier" d="${path}"/>` : ""}
+      ${[...pts].sort((a, b) => (dimmed(b) ? 1 : 0) - (dimmed(a) ? 1 : 0)).map(m => `${shapeSvg(m.fk, lx(m.latency_ms), ly(v.get(m)), r)} class="pt${dimmed(m) ? " dim" : ""}" fill="var(--${m.fk})" data-i="${m.i}" tabindex="0" aria-label="${esc(m.name)}: ${fmtPct(v.get(m))}%, ${fmtLat(m.latency_ms)}"/>`).join("")}
+      ${labels.join("")}
+    </svg>`;
+    const noLat = shown.length - pts.length;
+    $("caption").textContent = `Each point is a model with a result in this tab. The dashed line is the frontier: no faster model scores higher. Labels name models on the frontier; hover or tap a point for details.` +
+      (noLat ? ` ${noLat} model${noLat > 1 ? "s have" : " has"} no latency.` : "");
+  }
+
+  /* tooltip */
+  const tip = $("tip");
+  function showTip(x, y, i) {
+    const m = MODELS[i], { v } = view();
+    const cost = m.cost_per_1k_requests ? fmtCost(m).replace(/<[^>]+>/g, "") + " per 1k requests" : "";
+    tip.innerHTML = `<b>${esc(m.name)}</b><br><span class="k">${esc(FAMNAME[m.fk])} · ${esc(m.probabilities || "")}${m.reasons ? " · reasoning" : ""}</span><br>` +
+      `${esc(v.title)}: <b>${fmtPct(v.get(m))}%</b><br>` +
+      (m.accuracy != null && !(st.tab === "overall") ? `Overall accuracy ${fmtPct(pct(m.accuracy))}%<br>` : "") +
+      (m.brier != null ? `Brier ${m.brier.toFixed(3)}<br>` : "") +
+      `Latency ${fmtLat(m.latency_ms)}${m.latency_where ? ` <span class="k">· ${esc(m.latency_where)}</span>` : ""}` + (cost ? `<br>${esc(cost)}` : "");
+    tip.hidden = false;
+    const w = tip.offsetWidth, h = tip.offsetHeight;
+    let left = x + 14, top = y + 14;
+    if (left + w > innerWidth - 8) left = x - w - 14;
+    if (left < 8) left = 8;
+    if (top + h > innerHeight - 8) top = y - h - 14;
+    tip.style.left = left + "px"; tip.style.top = top + "px";
+  }
+  const hideTip = () => { tip.hidden = true; };
+  const plot = $("plot");
+  plot.addEventListener("pointermove", e => { const p = e.target.closest(".pt"); if (p) showTip(e.clientX, e.clientY, +p.dataset.i); else hideTip(); });
+  plot.addEventListener("pointerleave", e => { if (e.pointerType === "mouse") hideTip(); });
+  document.addEventListener("click", e => { const p = e.target.closest && e.target.closest("#plot .pt"); if (p) showTip(e.clientX, e.clientY, +p.dataset.i); else hideTip(); });  // taps
+  plot.addEventListener("focusin", e => { const p = e.target.closest(".pt"); if (!p) return; const b = p.getBoundingClientRect(); showTip(b.right, b.bottom, +p.dataset.i); });
+  plot.addEventListener("focusout", hideTip);
+  window.addEventListener("scroll", hideTip, { passive: true });
+
+  /* render */
+  function render() {
+    const { v } = view();
+    const scored = MODELS.filter(m => v.get(m) != null);
+    const famOk = m => st.fam === "all" || m.fk === st.fam;
+    const match = new Set(MODELS.filter(m => !st.q || m.name.toLowerCase().includes(st.q)).map(m => m.i));
+    $("desc").textContent = v.desc;
+    $("fig-title").textContent = `${v.title} vs. latency`;
+    drawFigure(v, scored, scored.filter(famOk), match);
+    drawTable(v, scored, scored.filter(m => famOk(m) && match.has(m.i)));
+  }
+  function update(hash = true) { drawTabs(); render(); if (hash) writeHash(); }
+  let lastW = 0;
+  new ResizeObserver(() => { const w = plot.clientWidth; if (w && Math.abs(w - lastW) > 2) { lastW = w; render(); } }).observe(plot);
+  readHash();
+  update(false);
+  if (document.fonts) document.fonts.ready.then(render);  // label widths depend on the web font
+})();
+</script>

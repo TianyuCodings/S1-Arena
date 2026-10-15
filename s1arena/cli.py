@@ -7,7 +7,7 @@ import json
 import sys
 
 from . import dataio, metrics, runner
-from .env import DATA, HF_DATASET, SUMMARY, load_env
+from .env import DATA, DATA_LOCAL, HF_DATASET, HF_DATASET_RESTRICTED, SUMMARY, load_env
 from .registry import envs_under, make_model, tasks_under
 
 
@@ -55,12 +55,25 @@ def cmd_build(args: argparse.Namespace) -> None:
 
 
 def cmd_download(args: argparse.Namespace) -> None:
-    """Fetch the built requests of every redistributable source from the Hugging Face dataset into data/."""
+    """Fetch the built requests of every redistributable source from the Hugging Face dataset into data/, and the
+    others from the private restricted dataset into data_local/ when the token has access to it."""
     from . import hub
 
     counts = hub.download(args.repo, args.domains or None, args.revision)
     print(f"wrote {sum(counts.values()):,} requests of {len(counts)} tasks to {DATA}")
-    print("Sources that do not allow redistribution are not included; build them with `s1arena build --local`.")
+    if not args.restricted_repo:
+        return
+    try:
+        counts = hub.download(args.restricted_repo, args.domains or None, None, restricted=True)
+    except Exception as error:  # no access (private dataset) or no token: the loaders rebuild these sources
+        counts, reason = {}, type(error).__name__
+    else:
+        reason = "no requests"
+    if counts:
+        print(f"wrote {sum(counts.values()):,} requests of {len(counts)} tasks to {DATA_LOCAL}")
+    else:
+        print(f"{args.restricted_repo}: not available ({reason}); "
+              "build the sources that do not allow redistribution with `s1arena build --local`.")
 
 
 def cmd_check_task(args: argparse.Namespace) -> None:
@@ -439,6 +452,9 @@ def main(argv: list[str] | None = None) -> None:
     p.add_argument("--repo", default=HF_DATASET, help="Hugging Face dataset id (default: $S1ARENA_HF_DATASET or %(default)s)")
     p.add_argument("--domains", nargs="*", default=[], help="only these domains (dataset configs), e.g. basic_cls know")
     p.add_argument("--revision", default=None, help="a dataset revision (branch, tag or commit)")
+    p.add_argument("--restricted-repo", default=HF_DATASET_RESTRICTED,
+                   help="private dataset with the sources that do not allow redistribution, read into data_local/ if the "
+                        "token has access ('' to skip; default: $S1ARENA_HF_DATASET_RESTRICTED or %(default)s)")
     p.set_defaults(func=cmd_download)
 
     p = sub.add_parser("check-task", help="validate a few items of one task and show a rendered request")

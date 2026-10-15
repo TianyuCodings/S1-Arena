@@ -23,7 +23,10 @@ DATA_LOCAL = ROOT / "data_local"  # built requests from sources that do not allo
 RUNS = ROOT / "results" / "runs"  # raw model responses
 SUMMARY = ROOT / "results" / "summary"
 # The Hugging Face dataset that holds the built requests of every redistributable source (`s1arena download`).
-HF_DATASET = os.environ.get("S1ARENA_HF_DATASET", "S1-Arena/S1-Arena")
+HF_DATASET = os.environ.get("S1ARENA_HF_DATASET", "C-Tianyu/S1-Arena")
+# A private dataset with the requests of the sources that do not allow redistribution, for the people who have access;
+# everybody else rebuilds them with `s1arena build --local`.
+HF_DATASET_RESTRICTED = os.environ.get("S1ARENA_HF_DATASET_RESTRICTED", "C-Tianyu/S1-Arena-restricted")
 
 _loaded = False
 

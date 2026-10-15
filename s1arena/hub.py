@@ -1,7 +1,8 @@
 """The Hugging Face dataset of built requests: one row per request, one config per domain, split "test".
 
 `s1arena download` reads it into data/<task>.jsonl; scripts/export_hf_dataset.py writes it. Sources that do not allow
-redistribution are not in it: `s1arena build --local` rebuilds them from their loaders into data_local/.
+redistribution are not in it: they are in a private dataset of the same layout (HF_DATASET_RESTRICTED, read into
+data_local/ by people who have access), and `s1arena build --local` rebuilds them from their loaders for everybody else.
 """
 
 from __future__ import annotations
@@ -52,17 +53,20 @@ def row_to_item(row: dict[str, Any]) -> Item:
     return item
 
 
-def download(repo: str = HF_DATASET, domains: list[str] | None = None, revision: str | None = None) -> dict[str, int]:
-    """Write every request of the dataset (or of some domains) to data/<task>.jsonl. Returns requests per task."""
+def download(repo: str = HF_DATASET, domains: list[str] | None = None, revision: str | None = None,
+             restricted: bool = False) -> dict[str, int]:
+    """Write every request of the dataset (or of some domains) to data/<task>.jsonl, or to data_local/<task>.jsonl for
+    the restricted dataset. Returns requests per task."""
     load_env()
     from datasets import get_dataset_config_names, load_dataset
 
     counts: dict[str, int] = {}
-    for config in domains or get_dataset_config_names(repo, revision=revision):
+    configs = get_dataset_config_names(repo, revision=revision)
+    for config in [c for c in configs if c in domains] if domains else configs:
         by_task: dict[str, list[Item]] = defaultdict(list)
         for row in load_dataset(repo, config, split="test", revision=revision):
             by_task[row["task"]].append(row_to_item(row))
         for task, items in sorted(by_task.items()):
-            dataio.write_items(dataio.task_path(task), items)
+            dataio.write_items(dataio.task_path(task, redistributable=not restricted), items)
             counts[task] = len(items)
     return counts

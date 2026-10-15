@@ -9,7 +9,7 @@ probability distribution over its options. Fast System-1 models (one forward pas
 generative LLMs (verbalized probabilities or label-token probabilities) answer the same requests and get the same
 scores.
 
-[Leaderboard](<website>) · [Paper](<arXiv>) · [Dataset](<HF dataset>)
+[Leaderboard](https://tianyucodings.github.io/S1-Arena) · Paper (arXiv, coming soon) · [Dataset](https://huggingface.co/datasets/C-Tianyu/S1-Arena)
 
 ## What is in it
 
@@ -56,7 +56,7 @@ The closed-loop environments are listed in [docs/envs.md](docs/envs.md).
 | 10 | GPT-6 Luna | closed LLM | 71.2% | 0.461 | 1,276 ms | $0.14 |
 
 All 30 models, per-domain scores and the agentic results: [leaderboard/results.json](leaderboard/results.json) and
-the [website](<website>). GPU-seconds are H100-equivalent.
+the [website](https://tianyucodings.github.io/S1-Arena). GPU-seconds are H100-equivalent.
 
 ## Install
 
@@ -73,7 +73,7 @@ uv run pytest -q
 
 ```bash
 uv run s1arena download                                    # the built requests, from Hugging Face, into data/
-uv run s1arena build --local                               # the 14 sources that do not allow redistribution
+uv run s1arena build --local                               # the 14 sources that do not allow redistribution, into data_local/
 uv run s1arena run --model random --leaf basic_cls --limit 20
 uv run s1arena score --models random --leaf basic_cls --limit 20
 ```
@@ -164,7 +164,8 @@ The recipes are in [CONTRIBUTING.md](CONTRIBUTING.md); the adapters and their ne
 The code is licensed under Apache-2.0 ([LICENSE](LICENSE)). Each source keeps its own license; check it before you
 use a source ([docs/sources.md](docs/sources.md)). Requests that S1-Arena generates are licensed CC BY 4.0. The
 Hugging Face dataset holds the requests of every source that allows redistribution; `s1arena build --local` rebuilds
-the other 14 sources from the original data. Some tasks contain offensive or disturbing text by design (toxicity,
+the other 14 sources from the original data (or `s1arena download` reads them from a private dataset, if you have
+access to it). Some tasks contain offensive or disturbing text by design (toxicity,
 safety and moderation sources).
 
 ## Citation
@@ -172,8 +173,8 @@ safety and moderation sources).
 ```bibtex
 @article{s1arena2026,
   title   = {System1-Arena: Which Decisions Can Be Left to System 1?},
-  author  = {<authors>},
-  journal = {arXiv preprint arXiv:<id>},
+  author  = {Chen, Tianyu and Liu, Xinyang and An, Ruyi and Wang, Zhendong and Zhou, Mingyuan},
+  journal = {arXiv preprint},
   year    = {2026}
 }
 ```
