@@ -52,7 +52,6 @@ button:focus-visible, input:focus-visible, th:focus-visible, a:focus-visible, .p
 .links { display: flex; flex-wrap: wrap; gap: 8px; align-items: center; }
 .links a, .links button { font: inherit; font-size: 13px; font-weight: 500; display: inline-flex; gap: 6px; align-items: center; padding: 6px 12px; border: 1px solid var(--line); border-radius: 8px; background: var(--surface); color: var(--ink); text-decoration: none; cursor: pointer; }
 .links a:hover, .links button:hover { border-color: var(--ink-2); }
-.links .soon { color: var(--muted); }
 
 /* card */
 .stage { background: var(--surface); border: 1px solid var(--line); border-radius: 12px; padding: 18px 18px 6px; min-width: 0; }
@@ -195,8 +194,7 @@ footer { color: var(--muted); font-size: 12px; margin-top: 18px; display: flex; 
       <p class="facts" id="facts"></p>
     </div>
     <nav class="links" aria-label="Project links">
-      <!-- TODO: replace # with the arXiv page of the paper once it is out. -->
-      <a href="#" class="soon" title="The arXiv link follows soon">Paper (soon)</a>
+      <a href="https://arxiv.org/abs/2610.21244" target="_blank" rel="noopener">Paper</a>
       <a href="https://github.com/TianyuCodings/S1-Arena" target="_blank" rel="noopener">Code</a>
       <a href="https://huggingface.co/datasets/C-Tianyu/S1-Arena" target="_blank" rel="noopener">Dataset</a>
       <button type="button" id="theme" aria-label="Color theme">Theme: auto</button>

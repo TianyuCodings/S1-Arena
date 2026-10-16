@@ -1,6 +1,6 @@
 # Deploys the leaderboard website (site/) to GitHub Pages on every push to main.
-# GitHub Pages works once the repository is public (or on a paid plan). Enable it once under
-# Settings > Pages > Build and deployment > Source: GitHub Actions.
+# Pages is enabled with Source: GitHub Actions (Settings > Pages); the site is public at
+# https://tianyucodings.github.io/S1-Arena/ even while the repository is private.
 name: pages
 on:
   push:
@@ -15,7 +15,6 @@ concurrency:
   cancel-in-progress: true
 jobs:
   deploy:
-    if: ${{ !github.event.repository.private }}  # skipped while the repository is private
     runs-on: ubuntu-latest
     environment:
       name: github-pages

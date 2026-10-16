@@ -38,7 +38,7 @@ CODE = "https://github.com/TianyuCodings/S1-Arena"
 SITE = "https://tianyucodings.github.io/S1-Arena"
 CITATION = ["@article{s1arena2026,", "  title  = {System1-Arena: Which Decisions Can Be Left to System 1?},",
             "  author = {Chen, Tianyu and Liu, Xinyang and An, Ruyi and Wang, Zhendong and Zhou, Mingyuan},",
-            "  journal = {arXiv preprint},", "  year   = {2026}", "}"]
+            "  journal = {arXiv preprint arXiv:2610.21244},", "  year   = {2026}", "}"]
 
 
 def card_text(configs: dict[str, int], sources: list[dict], local: list[dict], envs: list[dict]) -> str:

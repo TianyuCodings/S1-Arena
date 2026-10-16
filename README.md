@@ -9,7 +9,7 @@ probability distribution over its options. Fast System-1 models (one forward pas
 generative LLMs (verbalized probabilities or label-token probabilities) answer the same requests and get the same
 scores.
 
-[Leaderboard](https://tianyucodings.github.io/S1-Arena) · Paper (arXiv, coming soon) · [Dataset](https://huggingface.co/datasets/C-Tianyu/S1-Arena)
+[Leaderboard](https://tianyucodings.github.io/S1-Arena) · [Paper (arXiv)](https://arxiv.org/abs/2610.21244) · [Dataset](https://huggingface.co/datasets/C-Tianyu/S1-Arena)
 
 ## What is in it
 
@@ -174,7 +174,7 @@ safety and moderation sources).
 @article{s1arena2026,
   title   = {System1-Arena: Which Decisions Can Be Left to System 1?},
   author  = {Chen, Tianyu and Liu, Xinyang and An, Ruyi and Wang, Zhendong and Zhou, Mingyuan},
-  journal = {arXiv preprint},
+  journal = {arXiv preprint arXiv:2610.21244},
   year    = {2026}
 }
 ```
