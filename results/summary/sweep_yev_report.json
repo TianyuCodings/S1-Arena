@@ -1,0 +1,816 @@
+{
+ "plan": "yev",
+ "models": [
+  "HallD/Yev-Decision-1@rev=31e44b666d3a6c5bad24b2ee4da1ee878a8e67df"
+ ],
+ "overall": {
+  "HallD/Yev-Decision-1@rev=31e44b666d3a6c5bad24b2ee4da1ee878a8e67df": {
+   "static_accuracy": 0.6396982505303884,
+   "leaves": 105,
+   "envs": 32,
+   "static_answers": 100582,
+   "static_unanswered": 8,
+   "env_decisions": 19730,
+   "env_failed_decisions": 0
+  }
+ },
+ "static": {
+  "basic_cls/entity_relation": {
+   "HallD/Yev-Decision-1@rev=31e44b666d3a6c5bad24b2ee4da1ee878a8e67df": 0.6739653223673135
+  },
+  "basic_cls/intent": {
+   "HallD/Yev-Decision-1@rev=31e44b666d3a6c5bad24b2ee4da1ee878a8e67df": 0.9159999999999999
+  },
+  "basic_cls/language_style": {
+   "HallD/Yev-Decision-1@rev=31e44b666d3a6c5bad24b2ee4da1ee878a8e67df": 0.39807132722506794
+  },
+  "basic_cls/multilabel": {
+   "HallD/Yev-Decision-1@rev=31e44b666d3a6c5bad24b2ee4da1ee878a8e67df": 0.8848831168831168
+  },
+  "basic_cls/nli": {
+   "HallD/Yev-Decision-1@rev=31e44b666d3a6c5bad24b2ee4da1ee878a8e67df": 0.6459999999999999
+  },
+  "basic_cls/sentiment": {
+   "HallD/Yev-Decision-1@rev=31e44b666d3a6c5bad24b2ee4da1ee878a8e67df": 0.5766847990765457
+  },
+  "basic_cls/spam_phishing": {
+   "HallD/Yev-Decision-1@rev=31e44b666d3a6c5bad24b2ee4da1ee878a8e67df": 0.8937188274054302
+  },
+  "basic_cls/stance_sarcasm_humor": {
+   "HallD/Yev-Decision-1@rev=31e44b666d3a6c5bad24b2ee4da1ee878a8e67df": 0.6174610778443114
+  },
+  "basic_cls/topic": {
+   "HallD/Yev-Decision-1@rev=31e44b666d3a6c5bad24b2ee4da1ee878a8e67df": 0.6797008392852849
+  },
+  "basic_cls/toxicity": {
+   "HallD/Yev-Decision-1@rev=31e44b666d3a6c5bad24b2ee4da1ee878a8e67df": 0.8320000000000001
+  },
+  "batch/semantic_filter": {
+   "HallD/Yev-Decision-1@rev=31e44b666d3a6c5bad24b2ee4da1ee878a8e67df": 0.792
+  },
+  "batch/semantic_grouping": {
+   "HallD/Yev-Decision-1@rev=31e44b666d3a6c5bad24b2ee4da1ee878a8e67df": 0.854
+  },
+  "batch/semantic_ranking": {
+   "HallD/Yev-Decision-1@rev=31e44b666d3a6c5bad24b2ee4da1ee878a8e67df": 0.542
+  },
+  "code/code_search": {
+   "HallD/Yev-Decision-1@rev=31e44b666d3a6c5bad24b2ee4da1ee878a8e67df": 0.522
+  },
+  "code/commit_classification": {
+   "HallD/Yev-Decision-1@rev=31e44b666d3a6c5bad24b2ee4da1ee878a8e67df": 0.602
+  },
+  "code/fault_localization": {
+   "HallD/Yev-Decision-1@rev=31e44b666d3a6c5bad24b2ee4da1ee878a8e67df": 0.7260899886973041
+  },
+  "code/output_prediction": {
+   "HallD/Yev-Decision-1@rev=31e44b666d3a6c5bad24b2ee4da1ee878a8e67df": 0.52
+  },
+  "code/patch_correctness": {
+   "HallD/Yev-Decision-1@rev=31e44b666d3a6c5bad24b2ee4da1ee878a8e67df": 0.5900000000000001
+  },
+  "code/static_analysis_triage": {
+   "HallD/Yev-Decision-1@rev=31e44b666d3a6c5bad24b2ee4da1ee878a8e67df": 0.608
+  },
+  "code/test_outcome": {
+   "HallD/Yev-Decision-1@rev=31e44b666d3a6c5bad24b2ee4da1ee878a8e67df": 0.6067058823529412
+  },
+  "code/vulnerability": {
+   "HallD/Yev-Decision-1@rev=31e44b666d3a6c5bad24b2ee4da1ee878a8e67df": 0.5
+  },
+  "dialog/clarification_need": {
+   "HallD/Yev-Decision-1@rev=31e44b666d3a6c5bad24b2ee4da1ee878a8e67df": 0.5640000000000001
+  },
+  "dialog/end_of_turn": {
+   "HallD/Yev-Decision-1@rev=31e44b666d3a6c5bad24b2ee4da1ee878a8e67df": 0.692
+  },
+  "dialog/human_handoff": {
+   "HallD/Yev-Decision-1@rev=31e44b666d3a6c5bad24b2ee4da1ee878a8e67df": 0.9214545454545455
+  },
+  "dialog/state_tracking": {
+   "HallD/Yev-Decision-1@rev=31e44b666d3a6c5bad24b2ee4da1ee878a8e67df": 0.8813910932992924
+  },
+  "dialog/user_satisfaction": {
+   "HallD/Yev-Decision-1@rev=31e44b666d3a6c5bad24b2ee4da1ee878a8e67df": 0.386
+  },
+  "embodied/action_safety": {
+   "HallD/Yev-Decision-1@rev=31e44b666d3a6c5bad24b2ee4da1ee878a8e67df": 0.7142582305268981
+  },
+  "embodied/failure_type": {
+   "HallD/Yev-Decision-1@rev=31e44b666d3a6c5bad24b2ee4da1ee878a8e67df": 0.478
+  },
+  "embodied/feasibility": {
+   "HallD/Yev-Decision-1@rev=31e44b666d3a6c5bad24b2ee4da1ee878a8e67df": 0.7539739797513407
+  },
+  "embodied/next_skill": {
+   "HallD/Yev-Decision-1@rev=31e44b666d3a6c5bad24b2ee4da1ee878a8e67df": 0.7639602208026169
+  },
+  "embodied/spatial_reasoning": {
+   "HallD/Yev-Decision-1@rev=31e44b666d3a6c5bad24b2ee4da1ee878a8e67df": 0.3660991270471106
+  },
+  "embodied/task_success": {
+   "HallD/Yev-Decision-1@rev=31e44b666d3a6c5bad24b2ee4da1ee878a8e67df": 0.7097732246350672
+  },
+  "fore/binary_events": {
+   "HallD/Yev-Decision-1@rev=31e44b666d3a6c5bad24b2ee4da1ee878a8e67df": 0.6779813866243417
+  },
+  "fore/multi_outcome": {
+   "HallD/Yev-Decision-1@rev=31e44b666d3a6c5bad24b2ee4da1ee878a8e67df": 0.24007724301841948
+  },
+  "fore/numeric_bins": {
+   "HallD/Yev-Decision-1@rev=31e44b666d3a6c5bad24b2ee4da1ee878a8e67df": 0.29055882352941176
+  },
+  "game/chess_best_move": {
+   "HallD/Yev-Decision-1@rev=31e44b666d3a6c5bad24b2ee4da1ee878a8e67df": 0.128
+  },
+  "game/poker": {
+   "HallD/Yev-Decision-1@rev=31e44b666d3a6c5bad24b2ee4da1ee878a8e67df": 0.6
+  },
+  "game/position_eval": {
+   "HallD/Yev-Decision-1@rev=31e44b666d3a6c5bad24b2ee4da1ee878a8e67df": 0.28445518601351516
+  },
+  "game/puzzles": {
+   "HallD/Yev-Decision-1@rev=31e44b666d3a6c5bad24b2ee4da1ee878a8e67df": 0.4321838251208427
+  },
+  "game/social_games": {
+   "HallD/Yev-Decision-1@rev=31e44b666d3a6c5bad24b2ee4da1ee878a8e67df": 0.6399971142053243
+  },
+  "judge/agent_trajectory": {
+   "HallD/Yev-Decision-1@rev=31e44b666d3a6c5bad24b2ee4da1ee878a8e67df": 0.5495
+  },
+  "judge/atomic_factuality": {
+   "HallD/Yev-Decision-1@rev=31e44b666d3a6c5bad24b2ee4da1ee878a8e67df": 0.7743734436483297
+  },
+  "judge/instruction_following": {
+   "HallD/Yev-Decision-1@rev=31e44b666d3a6c5bad24b2ee4da1ee878a8e67df": 0.6626394953905871
+  },
+  "judge/pairwise_preference": {
+   "HallD/Yev-Decision-1@rev=31e44b666d3a6c5bad24b2ee4da1ee878a8e67df": 0.7570281124497992
+  },
+  "judge/pointwise_rating": {
+   "HallD/Yev-Decision-1@rev=31e44b666d3a6c5bad24b2ee4da1ee878a8e67df": 0.4608
+  },
+  "judge/process_reward": {
+   "HallD/Yev-Decision-1@rev=31e44b666d3a6c5bad24b2ee4da1ee878a8e67df": 0.34985450785176636
+  },
+  "judge/rag_faithfulness": {
+   "HallD/Yev-Decision-1@rev=31e44b666d3a6c5bad24b2ee4da1ee878a8e67df": 0.6903666102650874
+  },
+  "judge/reference_answer": {
+   "HallD/Yev-Decision-1@rev=31e44b666d3a6c5bad24b2ee4da1ee878a8e67df": 0.7315609744366688
+  },
+  "judge/summary_consistency": {
+   "HallD/Yev-Decision-1@rev=31e44b666d3a6c5bad24b2ee4da1ee878a8e67df": 0.7859822022621423
+  },
+  "judge/translation_quality": {
+   "HallD/Yev-Decision-1@rev=31e44b666d3a6c5bad24b2ee4da1ee878a8e67df": 0.28200000000000003
+  },
+  "know/answerability": {
+   "HallD/Yev-Decision-1@rev=31e44b666d3a6c5bad24b2ee4da1ee878a8e67df": 0.772
+  },
+  "know/causal": {
+   "HallD/Yev-Decision-1@rev=31e44b666d3a6c5bad24b2ee4da1ee878a8e67df": 0.9059999999999999
+  },
+  "know/citation_support": {
+   "HallD/Yev-Decision-1@rev=31e44b666d3a6c5bad24b2ee4da1ee878a8e67df": 0.656
+  },
+  "know/commonsense": {
+   "HallD/Yev-Decision-1@rev=31e44b666d3a6c5bad24b2ee4da1ee878a8e67df": 0.8680229901642499
+  },
+  "know/date_reasoning": {
+   "HallD/Yev-Decision-1@rev=31e44b666d3a6c5bad24b2ee4da1ee878a8e67df": 0.6660654594425607
+  },
+  "know/fact_verification": {
+   "HallD/Yev-Decision-1@rev=31e44b666d3a6c5bad24b2ee4da1ee878a8e67df": 0.768126397806796
+  },
+  "know/factual_judgment": {
+   "HallD/Yev-Decision-1@rev=31e44b666d3a6c5bad24b2ee4da1ee878a8e67df": 0.808
+  },
+  "know/logic_puzzles": {
+   "HallD/Yev-Decision-1@rev=31e44b666d3a6c5bad24b2ee4da1ee878a8e67df": 0.6377485991871678
+  },
+  "know/math_verification": {
+   "HallD/Yev-Decision-1@rev=31e44b666d3a6c5bad24b2ee4da1ee878a8e67df": 0.812
+  },
+  "know/multihop": {
+   "HallD/Yev-Decision-1@rev=31e44b666d3a6c5bad24b2ee4da1ee878a8e67df": 0.881754563162831
+  },
+  "know/numeric_comparison": {
+   "HallD/Yev-Decision-1@rev=31e44b666d3a6c5bad24b2ee4da1ee878a8e67df": 0.679604646129428
+  },
+  "know/subject_mcq": {
+   "HallD/Yev-Decision-1@rev=31e44b666d3a6c5bad24b2ee4da1ee878a8e67df": 0.41600000000000004
+  },
+  "pro/answer_grading": {
+   "HallD/Yev-Decision-1@rev=31e44b666d3a6c5bad24b2ee4da1ee878a8e67df": 0.45548174563094124
+  },
+  "pro/document_fields": {
+   "HallD/Yev-Decision-1@rev=31e44b666d3a6c5bad24b2ee4da1ee878a8e67df": 0.9079513089005236
+  },
+  "pro/ecommerce": {
+   "HallD/Yev-Decision-1@rev=31e44b666d3a6c5bad24b2ee4da1ee878a8e67df": 0.6263617343626001
+  },
+  "pro/finance": {
+   "HallD/Yev-Decision-1@rev=31e44b666d3a6c5bad24b2ee4da1ee878a8e67df": 0.7078613856624102
+  },
+  "pro/legal": {
+   "HallD/Yev-Decision-1@rev=31e44b666d3a6c5bad24b2ee4da1ee878a8e67df": 0.7480100040882092
+  },
+  "pro/medical": {
+   "HallD/Yev-Decision-1@rev=31e44b666d3a6c5bad24b2ee4da1ee878a8e67df": 0.5742130197436452
+  },
+  "pro/science": {
+   "HallD/Yev-Decision-1@rev=31e44b666d3a6c5bad24b2ee4da1ee878a8e67df": 0.40499999999999997
+  },
+  "pro/secops": {
+   "HallD/Yev-Decision-1@rev=31e44b666d3a6c5bad24b2ee4da1ee878a8e67df": 0.5971350471747269
+  },
+  "pro/support_tickets": {
+   "HallD/Yev-Decision-1@rev=31e44b666d3a6c5bad24b2ee4da1ee878a8e67df": 0.6832720101964744
+  },
+  "ret/context_sufficiency": {
+   "HallD/Yev-Decision-1@rev=31e44b666d3a6c5bad24b2ee4da1ee878a8e67df": 0.6592597936656807
+  },
+  "ret/entity_matching": {
+   "HallD/Yev-Decision-1@rev=31e44b666d3a6c5bad24b2ee4da1ee878a8e67df": 0.8819349253300629
+  },
+  "ret/relevance_grading": {
+   "HallD/Yev-Decision-1@rev=31e44b666d3a6c5bad24b2ee4da1ee878a8e67df": 0.49138152610441765
+  },
+  "ret/reranking": {
+   "HallD/Yev-Decision-1@rev=31e44b666d3a6c5bad24b2ee4da1ee878a8e67df": 0.698
+  },
+  "ret/retrieval_need": {
+   "HallD/Yev-Decision-1@rev=31e44b666d3a6c5bad24b2ee4da1ee878a8e67df": 0.6759999999999999
+  },
+  "route/context_pruning": {
+   "HallD/Yev-Decision-1@rev=31e44b666d3a6c5bad24b2ee4da1ee878a8e67df": 0.801905890606764
+  },
+  "route/difficulty": {
+   "HallD/Yev-Decision-1@rev=31e44b666d3a6c5bad24b2ee4da1ee878a8e67df": 0.22601784383041146
+  },
+  "route/escalation": {
+   "HallD/Yev-Decision-1@rev=31e44b666d3a6c5bad24b2ee4da1ee878a8e67df": 0.6978572974532863
+  },
+  "route/memory_decisions": {
+   "HallD/Yev-Decision-1@rev=31e44b666d3a6c5bad24b2ee4da1ee878a8e67df": 0.5820000000000001
+  },
+  "route/model_correctness": {
+   "HallD/Yev-Decision-1@rev=31e44b666d3a6c5bad24b2ee4da1ee878a8e67df": 0.6321150012081401
+  },
+  "route/model_selection": {
+   "HallD/Yev-Decision-1@rev=31e44b666d3a6c5bad24b2ee4da1ee878a8e67df": 0.21947169811320755
+  },
+  "route/tool_selection": {
+   "HallD/Yev-Decision-1@rev=31e44b666d3a6c5bad24b2ee4da1ee878a8e67df": 0.8259264603323473
+  },
+  "safety/agent_action_risk": {
+   "HallD/Yev-Decision-1@rev=31e44b666d3a6c5bad24b2ee4da1ee878a8e67df": 0.596
+  },
+  "safety/custom_policy": {
+   "HallD/Yev-Decision-1@rev=31e44b666d3a6c5bad24b2ee4da1ee878a8e67df": 0.737585070822211
+  },
+  "safety/harmfulness": {
+   "HallD/Yev-Decision-1@rev=31e44b666d3a6c5bad24b2ee4da1ee878a8e67df": 0.8693484825221353
+  },
+  "safety/injection": {
+   "HallD/Yev-Decision-1@rev=31e44b666d3a6c5bad24b2ee4da1ee878a8e67df": 0.7971887550200804
+  },
+  "safety/pii": {
+   "HallD/Yev-Decision-1@rev=31e44b666d3a6c5bad24b2ee4da1ee878a8e67df": 0.7995555555555556
+  },
+  "safety/refusal": {
+   "HallD/Yev-Decision-1@rev=31e44b666d3a6c5bad24b2ee4da1ee878a8e67df": 0.8199985571026621
+  },
+  "social/moral_judgment": {
+   "HallD/Yev-Decision-1@rev=31e44b666d3a6c5bad24b2ee4da1ee878a8e67df": 0.6359690258038141
+  },
+  "social/opinion_distribution": {
+   "HallD/Yev-Decision-1@rev=31e44b666d3a6c5bad24b2ee4da1ee878a8e67df": 0.706
+  },
+  "social/perspective_labeling": {
+   "HallD/Yev-Decision-1@rev=31e44b666d3a6c5bad24b2ee4da1ee878a8e67df": 0.7967192233048781
+  },
+  "social/persuasion_humor": {
+   "HallD/Yev-Decision-1@rev=31e44b666d3a6c5bad24b2ee4da1ee878a8e67df": 0.3452258064516129
+  },
+  "step/action_critic": {
+   "HallD/Yev-Decision-1@rev=31e44b666d3a6c5bad24b2ee4da1ee878a8e67df": 0.7435768463073852
+  },
+  "step/completion": {
+   "HallD/Yev-Decision-1@rev=31e44b666d3a6c5bad24b2ee4da1ee878a8e67df": 0.54
+  },
+  "step/failure_attribution": {
+   "HallD/Yev-Decision-1@rev=31e44b666d3a6c5bad24b2ee4da1ee878a8e67df": 0.4660060892742734
+  },
+  "step/next_action": {
+   "HallD/Yev-Decision-1@rev=31e44b666d3a6c5bad24b2ee4da1ee878a8e67df": 0.5235354969574036
+  },
+  "step/progress_success": {
+   "HallD/Yev-Decision-1@rev=31e44b666d3a6c5bad24b2ee4da1ee878a8e67df": 0.5480605054950339
+  },
+  "step/step_correctness": {
+   "HallD/Yev-Decision-1@rev=31e44b666d3a6c5bad24b2ee4da1ee878a8e67df": 0.5860000000000001
+  },
+  "step/tool_arguments": {
+   "HallD/Yev-Decision-1@rev=31e44b666d3a6c5bad24b2ee4da1ee878a8e67df": 0.814497752626969
+  },
+  "struct/column_types": {
+   "HallD/Yev-Decision-1@rev=31e44b666d3a6c5bad24b2ee4da1ee878a8e67df": 0.5845417598537864
+  },
+  "struct/data_quality_rules": {
+   "HallD/Yev-Decision-1@rev=31e44b666d3a6c5bad24b2ee4da1ee878a8e67df": 0.6606666666666667
+  },
+  "struct/log_anomaly": {
+   "HallD/Yev-Decision-1@rev=31e44b666d3a6c5bad24b2ee4da1ee878a8e67df": 0.5577639900921049
+  },
+  "struct/sql_verification": {
+   "HallD/Yev-Decision-1@rev=31e44b666d3a6c5bad24b2ee4da1ee878a8e67df": 0.6779999999999999
+  },
+  "struct/table_qa": {
+   "HallD/Yev-Decision-1@rev=31e44b666d3a6c5bad24b2ee4da1ee878a8e67df": 0.8440468460669024
+  }
+ },
+ "envs": {
+  "embodied/mujoco_control/half_cheetah": {
+   "HallD/Yev-Decision-1@rev=31e44b666d3a6c5bad24b2ee4da1ee878a8e67df": {
+    "mode": "paused",
+    "score_name": "return",
+    "episodes": 10,
+    "crashed": 0,
+    "success_rate": null,
+    "score_mean": -121.69009999999999,
+    "score_se": 18.607599271056493,
+    "decisions_mean": 300.0,
+    "failed_decision_rate": 0.0,
+    "latency_p50_ms": null,
+    "cost_per_episode_usd": null
+   }
+  },
+  "embodied/mujoco_control/hopper": {
+   "HallD/Yev-Decision-1@rev=31e44b666d3a6c5bad24b2ee4da1ee878a8e67df": {
+    "mode": "paused",
+    "score_name": "return",
+    "episodes": 10,
+    "crashed": 0,
+    "success_rate": null,
+    "score_mean": 255.8743,
+    "score_se": 25.51745850591534,
+    "decisions_mean": 124.4,
+    "failed_decision_rate": 0.0,
+    "latency_p50_ms": null,
+    "cost_per_episode_usd": null
+   }
+  },
+  "embodied/mujoco_control/inverted_double_pendulum": {
+   "HallD/Yev-Decision-1@rev=31e44b666d3a6c5bad24b2ee4da1ee878a8e67df": {
+    "mode": "paused",
+    "score_name": "return",
+    "episodes": 10,
+    "crashed": 0,
+    "success_rate": 0.0,
+    "score_mean": 25.8762,
+    "score_se": 0.04040319019307492,
+    "decisions_mean": 4.0,
+    "failed_decision_rate": 0.0,
+    "latency_p50_ms": null,
+    "cost_per_episode_usd": null
+   }
+  },
+  "embodied/mujoco_control/inverted_pendulum": {
+   "HallD/Yev-Decision-1@rev=31e44b666d3a6c5bad24b2ee4da1ee878a8e67df": {
+    "mode": "paused",
+    "score_name": "return",
+    "episodes": 10,
+    "crashed": 0,
+    "success_rate": 0.0,
+    "score_mean": 7.1,
+    "score_se": 2.1470910553583886,
+    "decisions_mean": 8.1,
+    "failed_decision_rate": 0.0,
+    "latency_p50_ms": null,
+    "cost_per_episode_usd": null
+   }
+  },
+  "embodied/mujoco_control/reacher": {
+   "HallD/Yev-Decision-1@rev=31e44b666d3a6c5bad24b2ee4da1ee878a8e67df": {
+    "mode": "paused",
+    "score_name": "return",
+    "episodes": 10,
+    "crashed": 0,
+    "success_rate": null,
+    "score_mean": -41.722,
+    "score_se": 2.502343275145651,
+    "decisions_mean": 50.0,
+    "failed_decision_rate": 0.0,
+    "latency_p50_ms": null,
+    "cost_per_episode_usd": null
+   }
+  },
+  "embodied/tabletop_loop/button_press_topdown": {
+   "HallD/Yev-Decision-1@rev=31e44b666d3a6c5bad24b2ee4da1ee878a8e67df": {
+    "mode": "paused",
+    "score_name": "success",
+    "episodes": 10,
+    "crashed": 0,
+    "success_rate": 0.0,
+    "score_mean": 0.0,
+    "score_se": 0.0,
+    "decisions_mean": 74.2,
+    "failed_decision_rate": 0.0,
+    "latency_p50_ms": null,
+    "cost_per_episode_usd": null
+   }
+  },
+  "embodied/tabletop_loop/door_open": {
+   "HallD/Yev-Decision-1@rev=31e44b666d3a6c5bad24b2ee4da1ee878a8e67df": {
+    "mode": "paused",
+    "score_name": "success",
+    "episodes": 10,
+    "crashed": 0,
+    "success_rate": 0.0,
+    "score_mean": 0.0,
+    "score_se": 0.0,
+    "decisions_mean": 29.3,
+    "failed_decision_rate": 0.0,
+    "latency_p50_ms": null,
+    "cost_per_episode_usd": null
+   }
+  },
+  "embodied/tabletop_loop/drawer_close": {
+   "HallD/Yev-Decision-1@rev=31e44b666d3a6c5bad24b2ee4da1ee878a8e67df": {
+    "mode": "paused",
+    "score_name": "success",
+    "episodes": 10,
+    "crashed": 0,
+    "success_rate": 0.4,
+    "score_mean": 0.4,
+    "score_se": 0.16329931618554522,
+    "decisions_mean": 32.3,
+    "failed_decision_rate": 0.0,
+    "latency_p50_ms": null,
+    "cost_per_episode_usd": null
+   }
+  },
+  "embodied/tabletop_loop/drawer_open": {
+   "HallD/Yev-Decision-1@rev=31e44b666d3a6c5bad24b2ee4da1ee878a8e67df": {
+    "mode": "paused",
+    "score_name": "success",
+    "episodes": 10,
+    "crashed": 0,
+    "success_rate": 0.0,
+    "score_mean": 0.0,
+    "score_se": 0.0,
+    "decisions_mean": 64.0,
+    "failed_decision_rate": 0.0,
+    "latency_p50_ms": null,
+    "cost_per_episode_usd": null
+   }
+  },
+  "embodied/tabletop_loop/peg_insert_side": {
+   "HallD/Yev-Decision-1@rev=31e44b666d3a6c5bad24b2ee4da1ee878a8e67df": {
+    "mode": "paused",
+    "score_name": "success",
+    "episodes": 10,
+    "crashed": 0,
+    "success_rate": 0.0,
+    "score_mean": 0.0,
+    "score_se": 0.0,
+    "decisions_mean": 50.2,
+    "failed_decision_rate": 0.0,
+    "latency_p50_ms": null,
+    "cost_per_episode_usd": null
+   }
+  },
+  "embodied/tabletop_loop/pick_place": {
+   "HallD/Yev-Decision-1@rev=31e44b666d3a6c5bad24b2ee4da1ee878a8e67df": {
+    "mode": "paused",
+    "score_name": "success",
+    "episodes": 10,
+    "crashed": 0,
+    "success_rate": 0.0,
+    "score_mean": 0.0,
+    "score_se": 0.0,
+    "decisions_mean": 55.3,
+    "failed_decision_rate": 0.0,
+    "latency_p50_ms": null,
+    "cost_per_episode_usd": null
+   }
+  },
+  "embodied/tabletop_loop/push": {
+   "HallD/Yev-Decision-1@rev=31e44b666d3a6c5bad24b2ee4da1ee878a8e67df": {
+    "mode": "paused",
+    "score_name": "success",
+    "episodes": 10,
+    "crashed": 0,
+    "success_rate": 0.0,
+    "score_mean": 0.0,
+    "score_se": 0.0,
+    "decisions_mean": 56.4,
+    "failed_decision_rate": 0.0,
+    "latency_p50_ms": null,
+    "cost_per_episode_usd": null
+   }
+  },
+  "embodied/tabletop_loop/reach": {
+   "HallD/Yev-Decision-1@rev=31e44b666d3a6c5bad24b2ee4da1ee878a8e67df": {
+    "mode": "paused",
+    "score_name": "success",
+    "episodes": 10,
+    "crashed": 0,
+    "success_rate": 0.0,
+    "score_mean": 0.0,
+    "score_se": 0.0,
+    "decisions_mean": 60.5,
+    "failed_decision_rate": 0.0,
+    "latency_p50_ms": null,
+    "cost_per_episode_usd": null
+   }
+  },
+  "embodied/tabletop_loop/window_close": {
+   "HallD/Yev-Decision-1@rev=31e44b666d3a6c5bad24b2ee4da1ee878a8e67df": {
+    "mode": "paused",
+    "score_name": "success",
+    "episodes": 10,
+    "crashed": 0,
+    "success_rate": 0.0,
+    "score_mean": 0.0,
+    "score_se": 0.0,
+    "decisions_mean": 45.9,
+    "failed_decision_rate": 0.0,
+    "latency_p50_ms": null,
+    "cost_per_episode_usd": null
+   }
+  },
+  "embodied/tabletop_loop/window_open": {
+   "HallD/Yev-Decision-1@rev=31e44b666d3a6c5bad24b2ee4da1ee878a8e67df": {
+    "mode": "paused",
+    "score_name": "success",
+    "episodes": 10,
+    "crashed": 0,
+    "success_rate": 0.0,
+    "score_mean": 0.0,
+    "score_se": 0.0,
+    "decisions_mean": 60.9,
+    "failed_decision_rate": 0.0,
+    "latency_p50_ms": null,
+    "cost_per_episode_usd": null
+   }
+  },
+  "game/chess_play/stockfish_level0": {
+   "HallD/Yev-Decision-1@rev=31e44b666d3a6c5bad24b2ee4da1ee878a8e67df": {
+    "mode": "paused",
+    "score_name": "result",
+    "episodes": 20,
+    "crashed": 0,
+    "success_rate": 0.0,
+    "score_mean": 0.0,
+    "score_se": 0.0,
+    "decisions_mean": 25.75,
+    "failed_decision_rate": 0.0,
+    "latency_p50_ms": null,
+    "cost_per_episode_usd": null
+   }
+  },
+  "game/roguelike/babyai_goto_local": {
+   "HallD/Yev-Decision-1@rev=31e44b666d3a6c5bad24b2ee4da1ee878a8e67df": {
+    "mode": "paused",
+    "score_name": "reward",
+    "episodes": 10,
+    "crashed": 0,
+    "success_rate": 0.4,
+    "score_mean": 0.19,
+    "score_se": 0.08524474568362948,
+    "decisions_mean": 7.6,
+    "failed_decision_rate": 0.0,
+    "latency_p50_ms": null,
+    "cost_per_episode_usd": null
+   }
+  },
+  "game/roguelike/babyai_goto_obj": {
+   "HallD/Yev-Decision-1@rev=31e44b666d3a6c5bad24b2ee4da1ee878a8e67df": {
+    "mode": "paused",
+    "score_name": "reward",
+    "episodes": 10,
+    "crashed": 0,
+    "success_rate": 0.1,
+    "score_mean": 0.05500000000000001,
+    "score_se": 0.05500000000000001,
+    "decisions_mean": 8.9,
+    "failed_decision_rate": 0.0,
+    "latency_p50_ms": null,
+    "cost_per_episode_usd": null
+   }
+  },
+  "game/roguelike/babyai_mini_boss_level": {
+   "HallD/Yev-Decision-1@rev=31e44b666d3a6c5bad24b2ee4da1ee878a8e67df": {
+    "mode": "paused",
+    "score_name": "reward",
+    "episodes": 10,
+    "crashed": 0,
+    "success_rate": 0.0,
+    "score_mean": 0.0,
+    "score_se": 0.0,
+    "decisions_mean": 70.8,
+    "failed_decision_rate": 0.0,
+    "latency_p50_ms": null,
+    "cost_per_episode_usd": null
+   }
+  },
+  "game/roguelike/babyai_pickup_loc": {
+   "HallD/Yev-Decision-1@rev=31e44b666d3a6c5bad24b2ee4da1ee878a8e67df": {
+    "mode": "paused",
+    "score_name": "reward",
+    "episodes": 10,
+    "crashed": 0,
+    "success_rate": 0.1,
+    "score_mean": 0.04,
+    "score_se": 0.04,
+    "decisions_mean": 12.2,
+    "failed_decision_rate": 0.0,
+    "latency_p50_ms": null,
+    "cost_per_episode_usd": null
+   }
+  },
+  "game/roguelike/babyai_put_next_local": {
+   "HallD/Yev-Decision-1@rev=31e44b666d3a6c5bad24b2ee4da1ee878a8e67df": {
+    "mode": "paused",
+    "score_name": "reward",
+    "episodes": 10,
+    "crashed": 0,
+    "success_rate": 0.0,
+    "score_mean": 0.0,
+    "score_se": 0.0,
+    "decisions_mean": 23.6,
+    "failed_decision_rate": 0.0,
+    "latency_p50_ms": null,
+    "cost_per_episode_usd": null
+   }
+  },
+  "game/roguelike/babyai_unlock_pickup": {
+   "HallD/Yev-Decision-1@rev=31e44b666d3a6c5bad24b2ee4da1ee878a8e67df": {
+    "mode": "paused",
+    "score_name": "reward",
+    "episodes": 10,
+    "crashed": 0,
+    "success_rate": 0.0,
+    "score_mean": 0.0,
+    "score_se": 0.0,
+    "decisions_mean": 37.0,
+    "failed_decision_rate": 0.0,
+    "latency_p50_ms": null,
+    "cost_per_episode_usd": null
+   }
+  },
+  "loop/text_games/tw_cooking_level3": {
+   "HallD/Yev-Decision-1@rev=31e44b666d3a6c5bad24b2ee4da1ee878a8e67df": {
+    "mode": "paused",
+    "score_name": "points",
+    "episodes": 20,
+    "crashed": 0,
+    "success_rate": 0.05,
+    "score_mean": 1.25,
+    "score_se": 0.16018081887929686,
+    "decisions_mean": 9.5,
+    "failed_decision_rate": 0.0,
+    "latency_p50_ms": null,
+    "cost_per_episode_usd": null
+   }
+  },
+  "loop/text_games/tw_cooking_level5": {
+   "HallD/Yev-Decision-1@rev=31e44b666d3a6c5bad24b2ee4da1ee878a8e67df": {
+    "mode": "paused",
+    "score_name": "points",
+    "episodes": 20,
+    "crashed": 0,
+    "success_rate": 0.15,
+    "score_mean": 0.85,
+    "score_se": 0.23254880642226708,
+    "decisions_mean": 50.8,
+    "failed_decision_rate": 0.0,
+    "latency_p50_ms": null,
+    "cost_per_episode_usd": null
+   }
+  },
+  "loop/text_games/tw_cooking_level7": {
+   "HallD/Yev-Decision-1@rev=31e44b666d3a6c5bad24b2ee4da1ee878a8e67df": {
+    "mode": "paused",
+    "score_name": "points",
+    "episodes": 20,
+    "crashed": 0,
+    "success_rate": 0.25,
+    "score_mean": 2.4,
+    "score_se": 0.3727564465184373,
+    "decisions_mean": 14.4,
+    "failed_decision_rate": 0.0,
+    "latency_p50_ms": null,
+    "cost_per_episode_usd": null
+   }
+  },
+  "loop/text_games/tw_cooking_level9": {
+   "HallD/Yev-Decision-1@rev=31e44b666d3a6c5bad24b2ee4da1ee878a8e67df": {
+    "mode": "paused",
+    "score_name": "points",
+    "episodes": 20,
+    "crashed": 0,
+    "success_rate": 0.05,
+    "score_mean": 2.1,
+    "score_se": 0.5375382483331327,
+    "decisions_mean": 21.25,
+    "failed_decision_rate": 0.0,
+    "latency_p50_ms": null,
+    "cost_per_episode_usd": null
+   }
+  },
+  "loop/wikiracing/wikispeedia": {
+   "HallD/Yev-Decision-1@rev=31e44b666d3a6c5bad24b2ee4da1ee878a8e67df": {
+    "mode": "paused",
+    "score_name": "clicks (lower is better)",
+    "episodes": 20,
+    "crashed": 0,
+    "success_rate": 0.1,
+    "score_mean": 7.35,
+    "score_se": 0.18173143863810048,
+    "decisions_mean": 7.35,
+    "failed_decision_rate": 0.0,
+    "latency_p50_ms": null,
+    "cost_per_episode_usd": null
+   }
+  },
+  "realtime/doom/basic": {
+   "HallD/Yev-Decision-1@rev=31e44b666d3a6c5bad24b2ee4da1ee878a8e67df": {
+    "mode": "realtime",
+    "score_name": "return",
+    "episodes": 10,
+    "crashed": 0,
+    "success_rate": 0.1,
+    "score_mean": -265.0,
+    "score_se": 40.0,
+    "decisions_mean": 67.7,
+    "failed_decision_rate": 0.0,
+    "latency_p50_ms": null,
+    "cost_per_episode_usd": null
+   }
+  },
+  "realtime/doom/deadly_corridor": {
+   "HallD/Yev-Decision-1@rev=31e44b666d3a6c5bad24b2ee4da1ee878a8e67df": {
+    "mode": "realtime",
+    "score_name": "return",
+    "episodes": 10,
+    "crashed": 0,
+    "success_rate": 0.0,
+    "score_mean": -11.0708,
+    "score_se": 6.361506426765422,
+    "decisions_mean": 16.3,
+    "failed_decision_rate": 0.0,
+    "latency_p50_ms": null,
+    "cost_per_episode_usd": null
+   }
+  },
+  "realtime/doom/defend_the_center": {
+   "HallD/Yev-Decision-1@rev=31e44b666d3a6c5bad24b2ee4da1ee878a8e67df": {
+    "mode": "realtime",
+    "score_name": "return",
+    "episodes": 10,
+    "crashed": 0,
+    "success_rate": null,
+    "score_mean": 3.7,
+    "score_se": 0.44845413490245695,
+    "decisions_mean": 113.0,
+    "failed_decision_rate": 0.0,
+    "latency_p50_ms": null,
+    "cost_per_episode_usd": null
+   }
+  },
+  "realtime/doom/health_gathering": {
+   "HallD/Yev-Decision-1@rev=31e44b666d3a6c5bad24b2ee4da1ee878a8e67df": {
+    "mode": "realtime",
+    "score_name": "return",
+    "episodes": 10,
+    "crashed": 0,
+    "success_rate": 0.2,
+    "score_mean": 900.0,
+    "score_se": 222.68822250950868,
+    "decisions_mean": 245.0,
+    "failed_decision_rate": 0.0,
+    "latency_p50_ms": null,
+    "cost_per_episode_usd": null
+   }
+  },
+  "realtime/drone/quadx_waypoints": {
+   "HallD/Yev-Decision-1@rev=31e44b666d3a6c5bad24b2ee4da1ee878a8e67df": {
+    "mode": "realtime",
+    "score_name": "return",
+    "episodes": 10,
+    "crashed": 0,
+    "success_rate": 0.0,
+    "score_mean": -119.21999999999998,
+    "score_se": 5.823187366993364,
+    "decisions_mean": 97.3,
+    "failed_decision_rate": 0.0,
+    "latency_p50_ms": null,
+    "cost_per_episode_usd": null
+   }
+  }
+ }
+}
