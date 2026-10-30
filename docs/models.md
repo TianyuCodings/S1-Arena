@@ -20,6 +20,7 @@ probabilities (`probability_source`), and the leaderboard shows it. To add a mod
 | `decision2` | `decision2:vllm-sr/Decision-2.0-Kai-0.6B` | Decision 2.0 models through their own code | native (candidate logits) | torch, transformers ≥ 5.17, GPU |
 | `laya` | `laya:convaiinnovations/laya` | Laya through its library | native (option logits) | torch, `pip install --no-deps laya==0.3.27` |
 | `clm` | `clm:Contrastive-LM/CLM-v0.1-8B` | CLM projection heads on a frozen encoder | native (state-option similarity) | torch, `pip install --no-deps contrastive-lm==0.1.0`, an embeddings endpoint (`CLM_EMB_URL`) |
+| `yev` | `yev:HallD/Yev-Decision-1@rev=31e44b6` | Yev-Decision-1 (Qwen3.5-4B-Base with LoRA and decision heads) through the yev package | native (temperature-scaled decision heads) | torch, transformers 5.17.0, peft 0.21.0, flash-linear-attention 0.5.2, `pip install "yev[inference] @ git+https://huggingface.co/HallD/yev"`, GPU |
 | `lm` | `lm:Qwen/Qwen3-8B` | any autoregressive model on vLLM | label-token log-probabilities at the answer position | vLLM, GPU |
 | `thinklm` | `thinklm:Qwen/Qwen3-8B@think=1024` | `lm` after a thought of at most `think` tokens | label-token log-probabilities after the thought | vLLM, GPU |
 | `dgemma` | `dgemma:google/diffusiongemma-26B-A4B-it` | DiffusionGemma, one read of an answer slot | answer-slot log-probabilities | vLLM with structured reads, GPU |

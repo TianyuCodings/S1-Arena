@@ -1,0 +1,7 @@
+{
+ "model": "HallD/Yev-Decision-1@rev=31e44b666d3a6c5bad24b2ee4da1ee878a8e67df",
+ "requests": 200,
+ "median_ms": 50.353407859802246,
+ "p90_ms": 154.52351570129395,
+ "mean_ms": 123.92338156700134
+}

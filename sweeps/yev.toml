@@ -1,0 +1,15 @@
+# sweeps/full.toml with Yev-Decision-1 as its only model: every task and every closed-loop environment.
+# Run:    uv run s1arena sweep sweeps/yev.toml
+# Report: uv run s1arena sweep-report sweeps/yev.toml
+name = "yev"
+tasks = [""]
+envs = [""]
+limit = 0
+
+[defaults]
+k = 1
+workers = 8
+env_workers = 4
+
+[[models]]
+spec = "yev:HallD/Yev-Decision-1@rev=31e44b666d3a6c5bad24b2ee4da1ee878a8e67df"
